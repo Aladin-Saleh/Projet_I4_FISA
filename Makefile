@@ -42,6 +42,13 @@ SERVER_RUN_OPTION = -cp $(SERVER)/$(BUILD)/:"$(CLASSPATH)"
 CLIENT_RUN_OPTION = -cp $(CLIENT)/$(BUILD)/:"$(CLASSPATH)"
 
 
+# COMMANDS
+
+compile_all:
+	echo "Compiling server/client ..."
+	$(JAVAC) $(JFLAGS_SERVER) $(SERVER)/$(SOURCE)/*.java
+	$(JAVAC) $(JFLAGS_CLIENT) $(CLIENT)/$(SOURCE)/*.java
+
 
 compile_server:
 	echo "Compiling server..."
