@@ -7,7 +7,7 @@ public class Server
     
     private ServerSocket serverSocket;
     private int          maxClient; 
-
+    
 
     public Server(ServerSocket ss)
     {
@@ -15,7 +15,7 @@ public class Server
         this.maxClient      = 4;
     }
 
-
+    // Lance le serveur
     public void startServer()
     {
         try
@@ -47,7 +47,7 @@ public class Server
         }
     }
 
-
+    // Fermer le serveur
     public void closeServer()
     {
         try
