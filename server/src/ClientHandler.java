@@ -15,10 +15,12 @@ public class ClientHandler implements Runnable {
     private Socket          socket;
     private BufferedWriter  writer;
     private BufferedReader  reader;
+    private GameZone        gameZone;
 
 
-    public ClientHandler(Socket socket)
+    public ClientHandler(Socket socket,GameZone gameZone)
     {
+        this.gameZone   = gameZone;
         try
         {
             this.socket = socket;

@@ -10,15 +10,23 @@ public class GameZone {
 
 
     // Matrice de jeu 10x10
-    private int[][] gameZone = new int[10][10];
+    private int[][] gameZone;
 
 
     public GameZone()
     {
+        this.gameZone = new int[10][10];
         this.generateGameZone();
         this.displayGameZone();
     }
 
+
+    public GameZone(int length)
+    {
+        this.gameZone = new int[length][length];
+        this.generateGameZone();
+        this.displayGameZone();
+    }
 
 
     // Generer une zone de jeu aléatoire labirynthique
