@@ -5,7 +5,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-public class Client {
+public class Client 
+{
     
 
     private BufferedReader bReader;
@@ -56,12 +57,15 @@ public class Client {
         }
     }
 
-    public void sendMessage(){
+    public void sendMessage()
+    {
 
-        try {
+        try 
+        {
             //Ecoute de l'entrée de client.
             //Scanner sc = new Scanner(System.in);
-            while(this.socket.isConnected()){
+            while(this.socket.isConnected())
+            {
                 String msgSend = this.readInput.readLine();
                 bWriter.write("("+this.socket.getInetAddress()+") : " + msgSend);
                 bWriter.newLine();
@@ -69,7 +73,8 @@ public class Client {
             }
     
         }
-        catch (IOException err) {
+        catch (IOException err) 
+        {
             err.printStackTrace();
             close(this.socket,this.bReader,this.bWriter);
         }
