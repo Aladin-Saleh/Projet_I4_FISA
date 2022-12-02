@@ -12,14 +12,15 @@ public class Labyrinth
 
         this.initialiseMap();
         Random random = new Random();
-        if(random.nextInt(2)==0)
-        {
-            this.generateViaDepthFirst();
-        }
-        else
-        {
-            this.generateViaKruskal();
-        }
+        this.generateViaDepthFirst();
+        // if(random.nextInt(2)==0)
+        // {
+        //     this.generateViaDepthFirst();
+        // }
+        // else
+        // {
+        //     this.generateViaKruskal();
+        // }
     }
 
     private void initialiseMap() 
@@ -120,5 +121,38 @@ public class Labyrinth
     private void generateViaKruskal()
     {
 
+    }
+
+    public Cell[][] getMap()
+    {
+        return this.map;
+    }
+
+    public void Display()
+    {
+        for(int i = 0; i< this.map.length;i++)
+        {
+            for(int j= 0; j<this.map[0].length;j++)
+            {
+                Cell current = this.map[i][j];
+                if(current.getSouthWall()){
+                    System.out.println("_");
+                }
+                else
+                {
+                    System.out.println(" ");
+                }
+
+                if(current.getEastWall())
+                {
+                    System.out.println("|");
+                }
+                else
+                {
+                    System.out.println(".");
+                }
+            }
+            System.out.println("\n");
+        }
     }
 }
