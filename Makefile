@@ -28,11 +28,11 @@ MAIN_SERVER = $(SERVER)Main.java
 
 
 # JFLAGS SERVER
-JFLAGS_SERVER = -cp $(SERVER)/$(CLASSPATH)  -d $(SERVER)/$(BUILD) -encoding "UTF-8" -sourcepath "$(SERVER)/src" -implicit:none 
+JFLAGS_SERVER = -cp "$(SERVER)/$(CLASSPATH)"  -d $(SERVER)/$(BUILD) -encoding "UTF-8" -sourcepath "$(SERVER)/src" -implicit:none 
 
 
 # JFLAGS CLIENT
-JFLAGS_CLIENT = -cp $(CLIENT)/$(CLASSPATH)  -d $(CLIENT)/$(BUILD) -encoding "UTF-8" -sourcepath "$(CLIENT)/src" -implicit:none
+JFLAGS_CLIENT = -cp "$(CLIENT)/$(CLASSPATH)"  -d $(CLIENT)/$(BUILD) -encoding "UTF-8" -sourcepath "$(CLIENT)/src" -implicit:none
 
 
 # SERVER RUN OPTION
@@ -41,6 +41,13 @@ SERVER_RUN_OPTION = -cp $(SERVER)/$(BUILD)/:"$(CLASSPATH)"
 # CLIENT RUN OPTION
 CLIENT_RUN_OPTION = -cp $(CLIENT)/$(BUILD)/:"$(CLASSPATH)"
 
+
+# COMMANDS
+
+compile_all:
+	echo "Compiling server/client ..."
+	$(JAVAC) $(JFLAGS_SERVER) $(SERVER)/$(SOURCE)/*.java
+	$(JAVAC) $(JFLAGS_CLIENT) $(CLIENT)/$(SOURCE)/*.java
 
 
 compile_server:
@@ -58,6 +65,11 @@ run_server:
 run_client:
 	echo "Client running..."
 	$(java) $(CLIENT_RUN_OPTION) Main
+
+run_gamezone:
+	echo "Gamezone running..."
+	$(java) $(SERVER_RUN_OPTION) GameZone
+
 
 clean:
 	echo "Cleaning all repository..."
