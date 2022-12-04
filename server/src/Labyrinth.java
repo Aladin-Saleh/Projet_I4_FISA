@@ -6,6 +6,7 @@ public class Labyrinth
 {
     private Cell[][] map;
 
+    // Constructeur de labyrinthe de taille rows x cols
     public Labyrinth(int rows,int cols)
     {
         map = new Cell[rows][cols];
@@ -23,6 +24,7 @@ public class Labyrinth
         // }
     }
 
+    // Fonction qui initialise le tableau this.map avec des Cell ayant un identifiant unique
     private void initialiseMap() 
     {
         int cpt = 0;
@@ -36,6 +38,7 @@ public class Labyrinth
         }
     }
 
+    // Fonction récursive qui génère un labyrinthe avec l'algorithme DepthFirst
     private void generateViaDepthFirst()
     {
         Random random = new Random();
@@ -44,6 +47,7 @@ public class Labyrinth
         recursiveDepthFirst(this.map[x][y], x, y);
     }
 
+    // Fonction récursive qui détruit le mur entre la cellule current et une cellule voisine aléatoire non visitée
     private void recursiveDepthFirst(Cell current,int x,int y)
     {
         current.setVisited(true);
@@ -52,6 +56,8 @@ public class Labyrinth
         int[] yDirection = {y+1,y,y-1,y};
         Random random    = new Random();
         int direction    = random.nextInt(4);
+
+        // TODO : fonction qui retourne un tableau avec les directions encore possibles 
         while(numberOfPossibleDirections(x, y)>0)
         {
             if(doesExistCell(xDirection[direction], yDirection[direction]))
@@ -66,6 +72,7 @@ public class Labyrinth
         }
     }
 
+    // Fonction qui detruit le mur entre la cellule current et chosenCell dans la direction passée en paramètre
     private void destroyWallBetween(Cell current, Cell chosenCell, int direction) 
     {
         switch(direction)
@@ -91,6 +98,7 @@ public class Labyrinth
         }
     }
 
+    // Fonction qui retourne le nombre de direction possible depuis la cellule [x,y]dans le tableau this.map
     private int numberOfPossibleDirections(int x, int y) 
     {
         int nbDirections = 0;
@@ -108,6 +116,7 @@ public class Labyrinth
         return nbDirections;
     }
 
+    // Fonction qui retourne un booléen pour indiquer si la cellule en position [x,y] existe dans le tableau this.map
     private boolean doesExistCell(int x, int y) 
     {
         boolean doesExist = false;
@@ -118,16 +127,20 @@ public class Labyrinth
         return doesExist;
     }
 
-    private void generateViaKruskal()
-    {
+    // TODO : algorithme de génération de labryrinth de Kruskal
+    // private void generateViaKruskal()
+    // {
 
-    }
+    // }
 
+    // Fonction qui retourne le labryrinthe
     public Cell[][] getMap()
     {
         return this.map;
     }
 
+
+    // Fonction qui dessine le labyrinthe
     public void Display()
     {
         for(int i = 0; i< this.map.length;i++)
@@ -136,23 +149,23 @@ public class Labyrinth
             {
                 Cell current = this.map[i][j];
                 if(current.getSouthWall()){
-                    System.out.println("_");
+                    System.out.print("_");
                 }
                 else
                 {
-                    System.out.println(" ");
+                    System.out.print(" ");
                 }
 
                 if(current.getEastWall())
                 {
-                    System.out.println("|");
+                    System.out.print("|");
                 }
                 else
                 {
-                    System.out.println(".");
+                    System.out.print(".");
                 }
             }
-            System.out.println("\n");
+            System.out.print("\n");
         }
     }
 }
