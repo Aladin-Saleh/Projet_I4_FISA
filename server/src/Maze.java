@@ -3,12 +3,12 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
 
-public class Labyrinth
+public class Maze
 {
     private Cell[][] map;
 
-    // Constructeur de labyrinthe de taille rows x cols
-    public Labyrinth(int rows,int cols)
+    // Constructeur de Maze de taille rows x cols
+    public Maze(int rows,int cols)
     {
         map = new Cell[rows][cols];
 
@@ -58,7 +58,7 @@ public class Labyrinth
         }
     }
 
-    // Fonction récursive qui génère un labyrinthe avec l'algorithme DepthFirst
+    // Fonction récursive qui génère un Mazee avec l'algorithme DepthFirst
     private void generateViaDepthFirst()
     {
         Random random = new Random();
@@ -153,7 +153,7 @@ public class Labyrinth
     }
 
 
-    // Fonction qui dessine le labyrinthe
+    // Fonction qui dessine le Mazee
     public void Display()
     {
         for(int i = 0;i < (this.map.length*2)+1; i++){
