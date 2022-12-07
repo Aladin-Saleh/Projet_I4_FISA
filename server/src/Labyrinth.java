@@ -1,4 +1,5 @@
 import java.nio.file.SecureDirectoryStream;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Stack;
 
@@ -32,9 +33,27 @@ public class Labyrinth
         {
             for(int j = 0;j<this.map[i].length;j++)
             {
-                this.map[i][j] = new Cell(cpt);
-                this.map[i][j].setVisited(false);
+                this.map[i][j] = new Cell(cpt,i,j);
+                // System.out.println("Initialisation cellule isVisited : "+this.map[i][j].getIsVisited());
                 cpt++;
+            }
+        }
+
+        for(int i=0; i< this.map.length;i++)
+        {
+            for(int j = 0;j<this.map[i].length;j++)
+            {
+                int[] xDirection = {i,i+1,i,i-1};
+                int[] yDirection = {j+1,j,j-1,j};
+                ArrayList<Cell> neighbors = new ArrayList<Cell>();
+                for( int k = 0; k < 4; k++)
+                {   
+                    if(doesExistCell(xDirection[k], yDirection[k]))
+                    {
+                        neighbors.add(this.map[xDirection[k]][yDirection[k]]);
+                    }
+                }
+                this.map[i][j].setNeighbors(neighbors);
             }
         }
     }
@@ -43,82 +62,70 @@ public class Labyrinth
     private void generateViaDepthFirst()
     {
         Random random = new Random();
-        int x = random.nextInt(this.map.length);
-        int y = random.nextInt(this.map[0].length);
-        recursiveDepthFirst(this.map[x][y], x, y);
+        int x         = random.nextInt(this.map.length);
+        int y         = random.nextInt(this.map[0].length);
+        recursiveDepthFirst(this.map[x][y]);
     }
 
     // Fonction récursive qui détruit le mur entre la cellule current et une cellule voisine aléatoire non visitée
-    private void recursiveDepthFirst(Cell current,int x,int y)
+    private void recursiveDepthFirst(Cell current)
     {
         current.setVisited(true);
-        int[] xDirection = {x,x+1,x,x-1};
-        int[] yDirection = {y+1,y,y-1,y};
-
         // TODO : fonction qui retourne un tableau avec les directions encore possibles 
-        int nbPossibleDirections = numberOfPossibleDirections(x, y);
-        Random random    = new Random();
-        int direction    = random.nextInt(4);
-        
-        while(nbPossibleDirections>0)
+        int nbPossibleDirections = numberOfPossibleDirections(current);
+        Random random            = new Random();
+        int direction            = random.nextInt(current.getNeighbors().size());
+        while (nbPossibleDirections > 0)
         {
-            System.out.println(""+x+" "+y);
-            System.out.println("La cellule ["+xDirection[direction]+","+yDirection[direction]+"] existe");
-            Cell chosenCell = this.map[xDirection[direction]][yDirection[direction]];
-            System.out.println(chosenCell.getIsVisited());
-            if(!chosenCell.getIsVisited())
+            Cell chosenCell      = current.getNeighbors().get(direction);
+            if (!chosenCell.getIsVisited())
             {
-                System.out.println("La cellule n'est pas visitée");
-                destroyWallBetween(current,chosenCell,direction);
-                recursiveDepthFirst(chosenCell, xDirection[direction], yDirection[direction]);
+                destroyWallBetween(current,chosenCell);
+                recursiveDepthFirst(chosenCell);
             }
+            nbPossibleDirections = numberOfPossibleDirections(current);
+            direction            = random.nextInt(current.getNeighbors().size());
         }
-        System.out.println("Fin de fonction récursive");
     }
 
     // Fonction qui detruit le mur entre la cellule current et chosenCell dans la direction passée en paramètre
-    private void destroyWallBetween(Cell current, Cell chosenCell, int direction) 
+    private void destroyWallBetween(Cell current, Cell chosenCell) 
     {
-        switch(direction)
+        int yDest = chosenCell.getY() - current.getY();
+        int xDest = chosenCell.getX() - current.getX();
+
+        if(yDest == 1 && xDest == 0)// Ouest
         {
-            case 0: // South
-                current.setSouthWall(false);
-                chosenCell.setNorthWall(false);
-                break;
-            case 1: // East
-                chosenCell.setWestWall(false);
-                current.setEastWall(false);
-                break;
-            case 2: // North
-                chosenCell.setSouthWall(false);
-                current.setNorthWall(false);
-                break;
-            case 3: // West
-                current.setWestWall(false);
-                chosenCell.setEastWall(false);
-                break;
-            default:
-                break;
+            chosenCell.setWestWall(false);
+            current.setEastWall(false);
+        }
+        else if(yDest == -1 && xDest == 0)// Est
+        {
+            current.setWestWall(false);
+            chosenCell.setEastWall(false);
+        }
+        else if(yDest == 0 && xDest == 1)// Sud
+        {
+            current.setSouthWall(false);
+            chosenCell.setNorthWall(false);
+        }
+        else if(yDest == 0 && xDest == -1)// Nord
+        {
+            chosenCell.setSouthWall(false);
+            current.setNorthWall(false);
         }
     }
 
     // Fonction qui retourne le nombre de direction possible depuis la cellule [x,y]dans le tableau this.map
-    private int numberOfPossibleDirections(int x, int y) 
+    private int numberOfPossibleDirections(Cell current) 
     {
         int nbDirections = 0;
-        int[] xDirection = {x,x+1,x,x-1};
-        int[] yDirection = {y+1,y,y-1,y};
-        for(int i = 0;i<4;i++){
-            if(doesExistCell(xDirection[i], yDirection[i]))
+        for (Cell cell : current.getNeighbors()) {
+            if(!cell.getIsVisited())
             {
-                Cell current = this.map[xDirection[i]][yDirection[i]];
-                if(!current.getIsVisited())
-                {
-                    nbDirections++;
-                }
+                nbDirections++;
             }
         }
-
         return nbDirections;
     }
 
@@ -126,7 +133,7 @@ public class Labyrinth
     private boolean doesExistCell(int x, int y) 
     {
         boolean doesExist = false;
-        if(x >= 0 && y >= 0 && x < this.map.length && y < this.map[0].length)
+        if ( x >= 0 && y >= 0 && x < this.map.length && y < this.map[0].length)
         {
             doesExist = true;
         }
@@ -149,12 +156,19 @@ public class Labyrinth
     // Fonction qui dessine le labyrinthe
     public void Display()
     {
+        for(int i = 0;i < (this.map.length*2)+1; i++){
+            System.out.print("_");
+        }
+        System.out.println();
         for(int i = 0; i< this.map.length;i++)
         {
+            System.out.print("|");
             for(int j= 0; j<this.map[0].length;j++)
             {
                 Cell current = this.map[i][j];
-                if(current.getSouthWall()){
+            
+                if(current.getSouthWall())
+                {
                     System.out.print("_");
                 }
                 else
@@ -171,7 +185,7 @@ public class Labyrinth
                     System.out.print(".");
                 }
             }
-            System.out.print("\n");
+            System.out.println();
         }
     }
 }
