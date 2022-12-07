@@ -3,10 +3,11 @@ import javax.swing.JFrame;
 public class Screen extends JFrame
 {
     
-    private int[][] gameZone;
+    // private int[][] gameZone;
+    private GameZone gameZone;
     private int size;
 
-    public Screen(int[][] gameZone,int cellSize)
+    public Screen(GameZone gameZone,int cellSize)
     {
         this.gameZone   = gameZone;
         this.size       = cellSize;
