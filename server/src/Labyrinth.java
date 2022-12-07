@@ -13,7 +13,7 @@ public class Labyrinth
         map = new Cell[rows][cols];
 
         this.initialiseMap();
-        Random random = new Random();
+        // Random random = new Random();
         this.generateViaDepthFirst();
         // if(random.nextInt(2)==0)
         // {
