@@ -1,3 +1,11 @@
+import java.awt.Graphics;
+import javax.swing.JComponent;
+import javax.swing.*;
+import java.util.*;
+import java.util.List;
+import java.awt.*;
+
+
 public class GameZone {
     
     // Constantes
@@ -105,6 +113,29 @@ public class GameZone {
         }
     }
 
+    // Retourne les coordonnées d'une case vide aléatoire
+    public int[] getRandomEmptyCase()
+    {
+        int[] coords = new int[2];
+        int x = 0;
+        int y = 0;
+
+        do
+        {
+            x = (int) (Math.random() * this.gameZone.length);
+            y = (int) (Math.random() * this.gameZone.length);
+        }
+        while (this.gameZone[x][y] != GameZone.EMPTY);
+
+        coords[0] = x;
+        coords[1] = y;
+
+        return coords;
+    }
+
+
+
+
     // Retourne la matrice de jeu (debug)
     public void displayGameZone()
     {
@@ -119,6 +150,50 @@ public class GameZone {
     }
 
 
+    public void paintGameZone(Graphics gPaint)
+    {
+        gPaint.setColor(Color.ORANGE);
+
+        for (int i = 0; i < this.gameZone.length; i++) 
+        {
+            for (int j = 0; j < this.gameZone.length; j++) 
+            {
+                
+                System.out.print(this.gameZone[i][j]);
+
+                if (this.gameZone[i][j] == GameZone.WALL)
+                {
+                    gPaint.setColor(Color.ORANGE);
+                    gPaint.fillRect(i*35, j*35, 35, 35);
+                }
+
+                if (this.gameZone[i][j] == GameZone.EMPTY)
+                {
+                    gPaint.setColor(Color.GREEN);
+                    gPaint.fillRect(i*35, j*35, 35, 35);
+                }
+
+                if (this.gameZone[i][j] == GameZone.EXIT)
+                {
+                    gPaint.setColor(Color.RED);
+                    gPaint.fillRect(i*35, j*35, 35, 35);
+                }
+
+                if (this.gameZone[i][j] == GameZone.BONUS_SALAD)
+                {
+                    gPaint.setColor(Color.YELLOW);
+                    gPaint.fillRect(i*35, j*35, 35, 35);
+                }
+
+                if (this.gameZone[i][j] == GameZone.TRANSPORTER)
+                {
+                    gPaint.setColor(Color.BLUE);
+                    gPaint.fillRect(i*35, j*35, 35, 35);
+                }
+            }
+            System.out.println();
+        }
+    }
 
 
 
@@ -132,21 +207,6 @@ public class GameZone {
     {
         this.gameZone = gameZone;
     }
-
-
-
-    public static void main(String[] args) {
-        GameZone gameZone = new GameZone();
-        
-    }
-
-
-
-
-
-
-
-
 
 
 }
