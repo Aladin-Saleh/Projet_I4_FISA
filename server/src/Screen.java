@@ -17,12 +17,6 @@ public class Screen extends JFrame
         this.setResizable(true);
 
         this.add(new Display(this.gameZone));
-
-
-
-
-
-
         this.setVisible(true);
     }
 

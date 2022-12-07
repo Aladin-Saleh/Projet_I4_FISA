@@ -57,6 +57,27 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    public void sendMessage(String s)
+    {
+        try
+        {
+            for (ClientHandler client : clients)
+            {
+                if (client == this)
+                {
+                    client.writer.write(s);
+                    client.writer.newLine();
+                    client.writer.flush();
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("[ClientHandler] : " + e.getMessage());
+            this.close(this.socket, this.reader, this.writer);
+        }
+    }
+
     public void clientLeft()
     {
         this.broadcast("[ClientHandler] : Client left !");
@@ -93,6 +114,7 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         
+        this.sendMessage(this.gameZone.getRandomEmptyCase()[0] + " " + this.gameZone.getRandomEmptyCase()[1]);
         while (!this.socket.isClosed())
         {
             try
@@ -110,7 +132,7 @@ public class ClientHandler implements Runnable {
                     Thread.currentThread().interrupt();
                 }
             }
-            catch (Exception e)
+            catch (IOException e)
             {
                 System.out.println("[ClientHandler] : " + e.getMessage());
                 this.close(this.socket, this.reader, this.writer);

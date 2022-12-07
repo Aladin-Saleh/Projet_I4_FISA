@@ -105,6 +105,29 @@ public class GameZone {
         }
     }
 
+    // Retourne les coordonnées d'une case vide aléatoire
+    public int[] getRandomEmptyCase()
+    {
+        int[] coords = new int[2];
+        int x = 0;
+        int y = 0;
+
+        do
+        {
+            x = (int) (Math.random() * this.gameZone.length);
+            y = (int) (Math.random() * this.gameZone.length);
+        }
+        while (this.gameZone[x][y] != GameZone.EMPTY);
+
+        coords[0] = x;
+        coords[1] = y;
+
+        return coords;
+    }
+
+
+
+
     // Retourne la matrice de jeu (debug)
     public void displayGameZone()
     {

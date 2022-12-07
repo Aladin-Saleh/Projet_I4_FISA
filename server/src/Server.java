@@ -14,8 +14,8 @@ public class Server
     {
         this.serverSocket   = ss;
         this.maxClient      = 4;
-        this.gameZone       = new GameZone(19);
-        this.screen         = new Screen(this.gameZone.getGameZone(),19);
+        this.gameZone       = new GameZone(29);
+        this.screen         = new Screen(this.gameZone.getGameZone(),29);
     }
 
     // Lance le serveur
@@ -25,6 +25,7 @@ public class Server
         {
             while (!this.serverSocket.isClosed())
             {
+
                 System.out.println("[Server] : Waiting for client ...");
                 if (this.maxClient != 0)
                 {
