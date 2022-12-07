@@ -52,7 +52,6 @@ public class Labyrinth
     private void recursiveDepthFirst(Cell current,int x,int y)
     {
         current.setVisited(true);
-        Cell chosenCell;
         int[] xDirection = {x,x+1,x,x-1};
         int[] yDirection = {y+1,y,y-1,y};
 
@@ -63,11 +62,11 @@ public class Labyrinth
         
         while(nbPossibleDirections>0)
         {
+            System.out.println(""+x+" "+y);
             System.out.println("La cellule ["+xDirection[direction]+","+yDirection[direction]+"] existe");
-            chosenCell = this.map[xDirection[direction]][yDirection[direction]];
-            boolean isVisited = chosenCell.getIsVisited();
-            System.out.println("Visitée :"+isVisited);
-            if(!isVisited)
+            Cell chosenCell = this.map[xDirection[direction]][yDirection[direction]];
+            System.out.println(chosenCell.getIsVisited());
+            if(!chosenCell.getIsVisited())
             {
                 System.out.println("La cellule n'est pas visitée");
                 destroyWallBetween(current,chosenCell,direction);
