@@ -4,15 +4,17 @@ public class Screen extends JFrame
 {
     
     private int[][] gameZone;
+    private int size;
 
-    public Screen(int[][] gameZone)
+    public Screen(int[][] gameZone,int cellSize)
     {
-        this.gameZone = gameZone;
+        this.gameZone   = gameZone;
+        this.size       = cellSize;
         this.setTitle("Turtle");
-        this.setSize(500,500);
+        this.setSize(this.size * 40,this.size * 40);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setResizable(false);
+        this.setResizable(true);
 
         this.add(new Display(this.gameZone));
 

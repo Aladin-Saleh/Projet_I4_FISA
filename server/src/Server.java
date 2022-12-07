@@ -14,8 +14,8 @@ public class Server
     {
         this.serverSocket   = ss;
         this.maxClient      = 4;
-        this.gameZone       = new GameZone(10);
-        this.screen         = new Screen(this.gameZone.getGameZone());
+        this.gameZone       = new GameZone(19);
+        this.screen         = new Screen(this.gameZone.getGameZone(),19);
     }
 
     // Lance le serveur

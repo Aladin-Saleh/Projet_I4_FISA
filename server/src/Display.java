@@ -31,39 +31,44 @@ public class Display extends JComponent
 
         gPaint.setColor(Color.ORANGE);
 
-        for (int i = 0; i < 10; i++) 
+        for (int i = 0; i < this.gameZone.length; i++) 
         {
-            for (int j = 0; j < 10; j++) {
+            for (int j = 0; j < this.gameZone.length; j++) 
+            {
                 
+                System.out.print(this.gameZone[i][j]);
+
                 if (this.gameZone[i][j] == GameZone.WALL)
                 {
-                    gPaint.fillRect(i*50, j*50, 50, 50);
+                    gPaint.setColor(Color.ORANGE);
+                    gPaint.fillRect(i*35, j*35, 35, 35);
                 }
 
                 if (this.gameZone[i][j] == GameZone.EMPTY)
                 {
                     gPaint.setColor(Color.GREEN);
-                    gPaint.fillRect(i*50, j*50, 50, 50);
+                    gPaint.fillRect(i*35, j*35, 35, 35);
                 }
 
                 if (this.gameZone[i][j] == GameZone.EXIT)
                 {
                     gPaint.setColor(Color.RED);
-                    gPaint.fillRect(i*50, j*50, 50, 50);
+                    gPaint.fillRect(i*35, j*35, 35, 35);
                 }
 
                 if (this.gameZone[i][j] == GameZone.BONUS_SALAD)
                 {
                     gPaint.setColor(Color.YELLOW);
-                    gPaint.fillRect(i*50, j*50, 50, 50);
+                    gPaint.fillRect(i*35, j*35, 35, 35);
                 }
 
                 if (this.gameZone[i][j] == GameZone.TRANSPORTER)
                 {
                     gPaint.setColor(Color.BLUE);
-                    gPaint.fillRect(i*50, j*50, 50, 50);
+                    gPaint.fillRect(i*35, j*35, 35, 35);
                 }
             }
+            System.out.println();
         }
 
 
