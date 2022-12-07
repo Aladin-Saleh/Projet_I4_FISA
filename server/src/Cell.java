@@ -1,4 +1,5 @@
 import java.io.ObjectInputStream.GetField;
+import java.util.ArrayList;
 import java.util.Set;
 
 public class Cell {
@@ -8,8 +9,11 @@ public class Cell {
     private boolean northWall;
     private int zoneId;
     private boolean isVisited;
+    private int x;
+    private int y;
+    private ArrayList<Cell> neighbors;
 
-    public Cell(int zoneId)
+    public Cell(int zoneId, int x, int y)
     {
         this.eastWall   = true;
         this.westWall   = true;
@@ -17,6 +21,8 @@ public class Cell {
         this.northWall  = true;
         this.zoneId     = zoneId;
         this.isVisited  = false;
+        this.x = x;
+        this.y = y;
     }
 
     public boolean areSameZone(Cell c)
@@ -80,5 +86,29 @@ public class Cell {
     public boolean getIsVisited()
     {
         return this.isVisited;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public ArrayList<Cell> getNeighbors() {
+        return neighbors;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setNeighbors(ArrayList<Cell> neighbors) {
+        this.neighbors = neighbors;
     }
 }
