@@ -49,7 +49,6 @@ compile_all:
 	$(JAVAC) $(JFLAGS_SERVER) $(SERVER)/$(SOURCE)/*.java
 	$(JAVAC) $(JFLAGS_CLIENT) $(CLIENT)/$(SOURCE)/*.java
 
-
 compile_server:
 	echo "Compiling server..."
 	$(JAVAC) $(JFLAGS_SERVER) $(SERVER)/$(SOURCE)/*.java
