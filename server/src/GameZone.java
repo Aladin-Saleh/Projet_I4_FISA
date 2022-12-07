@@ -134,19 +134,4 @@ public class GameZone {
     }
 
 
-
-    public static void main(String[] args) {
-        GameZone gameZone = new GameZone();
-        
-    }
-
-
-
-
-
-
-
-
-
-
 }

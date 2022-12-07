@@ -12,7 +12,7 @@ public class Labyrinth
 
         this.initialiseMap();
         Random random = new Random();
-        if(random.nextInt(2)==0)
+        if(random.nextInt(2) == 0)
         {
             this.generateViaDepthFirst();
         }
@@ -25,9 +25,9 @@ public class Labyrinth
     private void initialiseMap() 
     {
         int cpt = 0;
-        for(int i=0; i< this.map.length;i++)
+        for(int i = 0; i < this.map.length; i++)
         {
-            for(int j = 0;j<this.map[i].length;j++)
+            for(int j = 0; j < this.map[i].length; j++)
             {
                 this.map[i][j] = new Cell(cpt);
                 cpt++;
@@ -37,9 +37,9 @@ public class Labyrinth
 
     private void generateViaDepthFirst()
     {
-        Random random = new Random();
-        int x = random.nextInt(this.map.length);
-        int y = random.nextInt(this.map[0].length);
+        Random random   = new Random();
+        int    x        = random.nextInt(this.map.length);
+        int    y        = random.nextInt(this.map[0].length);
         recursiveDepthFirst(this.map[x][y], x, y);
     }
 
@@ -93,7 +93,7 @@ public class Labyrinth
     private int numberOfPossibleDirections(int x, int y) 
     {
         int nbDirections = 0;
-        for(int i = 0;i<4;i++){
+        for(int i = 0; i < 4; i++){
             if(doesExistCell(x, y))
             {
                 Cell current = this.map[x][y];

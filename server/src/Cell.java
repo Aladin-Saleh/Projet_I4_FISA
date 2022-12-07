@@ -1,7 +1,5 @@
-import java.io.ObjectInputStream.GetField;
-import java.util.Set;
-
 public class Cell {
+    
     private boolean eastWall;
     private boolean westWall;
     private boolean southWall;
