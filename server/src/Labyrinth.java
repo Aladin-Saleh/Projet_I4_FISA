@@ -33,6 +33,7 @@ public class Labyrinth
             for(int j = 0;j<this.map[i].length;j++)
             {
                 this.map[i][j] = new Cell(cpt);
+                this.map[i][j].setVisited(false);
                 cpt++;
             }
         }
@@ -54,22 +55,26 @@ public class Labyrinth
         Cell chosenCell;
         int[] xDirection = {x,x+1,x,x-1};
         int[] yDirection = {y+1,y,y-1,y};
-        Random random    = new Random();
-        int direction    = random.nextInt(4);
 
         // TODO : fonction qui retourne un tableau avec les directions encore possibles 
-        while(numberOfPossibleDirections(x, y)>0)
+        int nbPossibleDirections = numberOfPossibleDirections(x, y);
+        Random random    = new Random();
+        int direction    = random.nextInt(4);
+        
+        while(nbPossibleDirections>0)
         {
-            if(doesExistCell(xDirection[direction], yDirection[direction]))
+            System.out.println("La cellule ["+xDirection[direction]+","+yDirection[direction]+"] existe");
+            chosenCell = this.map[xDirection[direction]][yDirection[direction]];
+            boolean isVisited = chosenCell.getIsVisited();
+            System.out.println("Visitée :"+isVisited);
+            if(!isVisited)
             {
-                chosenCell = this.map[xDirection[direction]][yDirection[direction]];
-                if(chosenCell.getIsVisited())
-                {
-                    destroyWallBetween(current,chosenCell,direction);
-                    recursiveDepthFirst(chosenCell, xDirection[direction], yDirection[direction]);
-                }
+                System.out.println("La cellule n'est pas visitée");
+                destroyWallBetween(current,chosenCell,direction);
+                recursiveDepthFirst(chosenCell, xDirection[direction], yDirection[direction]);
             }
         }
+        System.out.println("Fin de fonction récursive");
     }
 
     // Fonction qui detruit le mur entre la cellule current et chosenCell dans la direction passée en paramètre
@@ -102,11 +107,13 @@ public class Labyrinth
     private int numberOfPossibleDirections(int x, int y) 
     {
         int nbDirections = 0;
+        int[] xDirection = {x,x+1,x,x-1};
+        int[] yDirection = {y+1,y,y-1,y};
         for(int i = 0;i<4;i++){
-            if(doesExistCell(x, y))
+            if(doesExistCell(xDirection[i], yDirection[i]))
             {
-                Cell current = this.map[x][y];
-                if(current.getIsVisited())
+                Cell current = this.map[xDirection[i]][yDirection[i]];
+                if(!current.getIsVisited())
                 {
                     nbDirections++;
                 }
