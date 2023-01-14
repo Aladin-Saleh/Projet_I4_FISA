@@ -5,10 +5,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-public class Client 
+public class Client
 {
-    
-
     private BufferedReader bReader;
     private BufferedWriter bWriter;
     private BufferedReader readInput;
@@ -59,7 +57,6 @@ public class Client
 
     public void sendMessage()
     {
-
         try 
         {
             //Ecoute de l'entrée de client.
@@ -71,15 +68,12 @@ public class Client
                 bWriter.newLine();
                 bWriter.flush();
             }
-    
         }
         catch (IOException err) 
         {
             err.printStackTrace();
             close(this.socket,this.bReader,this.bWriter);
         }
-
-
     }
 
 
@@ -109,20 +103,7 @@ public class Client
                         }
                     }
                 }
-
             }
         ).start();
     }
-
-
-
-
-
-
-    
-
-
-
-
-
 }

@@ -2,16 +2,12 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 public class Turtle 
-{
-    
+{    
     // Constante de direction
     public static final String NORTH    = "N";
     public static final String SOUTH    = "S";
     public static final String EAST     = "E";
     public static final String WEST     = "W";
-
-
-
 
     // Matrice vide de 10x10
     private int[][] matrix = new int[10][10];
@@ -25,14 +21,15 @@ public class Turtle
     
     private Client client;
 
-
     public Turtle() 
     {
         this.direction = NORTH;
 
         // Initialisation de la matrice
-        for (int i = 0; i < this.matrix.length; i++) {
-            for (int j = 0; j < this.matrix[i].length; j++) {
+        for (int i = 0; i < this.matrix.length; i++) 
+        {
+            for (int j = 0; j < this.matrix[i].length; j++) 
+            {
                 this.matrix[i][j] = 0;
             }
         }
@@ -54,8 +51,10 @@ public class Turtle
         this.direction = NORTH;
 
         // Initialisation de la matrice
-        for (int i = 0; i < this.matrix.length; i++) {
-            for (int j = 0; j < this.matrix[i].length; j++) {
+        for (int i = 0; i < this.matrix.length; i++) 
+        {
+            for (int j = 0; j < this.matrix[i].length; j++) 
+            {
                 this.matrix[i][j] = 0;
             }
         }
