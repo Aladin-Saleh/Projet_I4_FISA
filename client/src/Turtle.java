@@ -5,8 +5,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 public class Turtle 
-{
-    
+{    
     // Constante de direction
     public static final String NORTH    = "N";
     public static final String SOUTH    = "S";
