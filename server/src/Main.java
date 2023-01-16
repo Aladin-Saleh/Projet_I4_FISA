@@ -4,11 +4,11 @@ import java.net.ServerSocket;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        Maze Maze = new Maze(50, 50);
-        Maze.Display();
+        Maze maze = new Maze(25, 25);
+        maze.diplayMaze();
 
         ServerSocket serverSocket = new ServerSocket(5000);
-        Server server = new Server(serverSocket);
+        Server server = new Server(serverSocket, maze);
         server.startServer();
     }
 }

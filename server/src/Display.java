@@ -11,12 +11,21 @@ public class Display extends JComponent
 
     // private int[][] gameZone;
     private GameZone gameZone;
-
+    private Maze    maze;
 
     public Display(GameZone gameZone)
     {
         this.gameZone = gameZone;
+        this.maze = null;
     }
+
+    public Display(Maze maze)
+    {
+        this.maze = maze;
+        this.gameZone = null;
+    }
+
+    
 
     
 
@@ -31,7 +40,14 @@ public class Display extends JComponent
           gPaint.fillRect(0, 0, this.getWidth(), this.getHeight());
         }
 
-        this.gameZone.paintGameZone(gPaint);
+        if (this.gameZone != null)
+        {
+            this.gameZone.paintGameZone(gPaint);
+        }
+        else
+        {
+            this.maze.paintMaze(gPaint);
+        }
 
     }
 }

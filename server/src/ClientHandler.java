@@ -5,6 +5,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ClientHandler implements Runnable {
 
@@ -16,11 +18,33 @@ public class ClientHandler implements Runnable {
     private BufferedWriter  writer;
     private BufferedReader  reader;
     private GameZone        gameZone;
-
+    private Maze            maze;
+    private JSONHandler     jsonHandler;
+    private Display         display;
 
     public ClientHandler(Socket socket,GameZone gameZone)
     {
         this.gameZone   = gameZone;
+        this.jsonHandler = new JSONHandler();
+        try
+        {
+            this.socket = socket;
+            this.writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            clients.add(this);
+
+        }
+        catch (Exception e)
+        {
+            System.out.println("[ClientHandler] : " + e.getMessage());
+        }
+    }
+
+    public ClientHandler(Socket socket,Maze maze, Display display)
+    {
+        this.maze = maze;
+        this.display = display;
+        this.jsonHandler = new JSONHandler();
         try
         {
             this.socket = socket;
@@ -111,12 +135,21 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    
+
     @Override
     public void run() {
         
-        this.sendMessage(this.gameZone.getRandomEmptyCase()[0] + " " + this.gameZone.getRandomEmptyCase()[1]);
+        // this.sendMessage(this.gameZone.getRandomEmptyCase()[0] + " " + this.gameZone.getRandomEmptyCase()[1]);
+        Map<String, String> map = new HashMap<String, String>();
+        // System.out.println(this.maze.getFreeCell()[0] + " " + this.maze.getFreeCell()[1]);
+        int[] position = new int[this.maze.getFreeCell().length];
+        map.put("position", position[0] + "," + position[1]);
+        map.put("maze", this.maze.getRows() + "," + this.maze.getCols());
+        this.sendMessage(this.jsonHandler.writeJSON(map));
         while (!this.socket.isClosed())
         {
+            this.display.repaint(); // Met à jour l'affichage (appel à paintComponent dont la classe Display hérite (JComponent))
             try
             {
                 String s = this.reader.readLine();

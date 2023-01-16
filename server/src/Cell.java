@@ -1,17 +1,31 @@
-import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
-import java.util.Set;
 
 public class Cell {
+    
+    // Les murs de la cellule (true = mur présent, false = mur absent)
     private boolean eastWall;
     private boolean westWall;
     private boolean southWall;
-    private boolean northWall;
-    private int zoneId;
+    private boolean northWall; 
+    
+    private boolean isOccupied; // Si la cellule est occupée ou non
+
+    private boolean isTransporter; // Si la cellule est un transporteur ou non
+
+    private boolean isBonus; // Si la cellule est un bonus ou non
+
+    private boolean isExit; // Si la cellule est la sortie ou non
+
+    // Si la cellule a été visitée ou non
     private boolean isVisited;
+
+    private int zoneId; // Identifiant de la zone à laquelle appartient la cellule
+
+    // Coordonnées de la cellule dans la matrice
     private int x;
     private int y;
-    private ArrayList<Cell> neighbors;
+
+    private ArrayList<Cell> neighbors; // Listes des voisins de la cellule
 
     public Cell(int zoneId, int x, int y)
     {
@@ -19,15 +33,72 @@ public class Cell {
         this.westWall   = true;
         this.southWall  = true;
         this.northWall  = true;
-        this.zoneId     = zoneId;
         this.isVisited  = false;
-        this.x = x;
-        this.y = y;
+        this.isOccupied = false;
+
+
+        // 3 % de chance d'avoir un bonus
+        if(Math.random() < 0.02)
+        {
+            this.isBonus = true;
+        }
+        else
+        {
+            this.isBonus = false;
+        }
+
+        // 1 % de chance d'avoir un transporteur
+        if(Math.random() < 0.01)
+        {
+            this.isTransporter = true;
+        }
+        else
+        {
+            this.isTransporter = false;
+        }
+
+
+
+
+        this.zoneId     = zoneId;
+        this.x          = x;
+        this.y          = y;
     }
 
     public boolean areSameZone(Cell c)
     {
         return this.zoneId == c.getZoneId();
+    }
+
+    public boolean isExit()
+    {
+        return this.isExit;
+    }
+
+    public void setExit(boolean isExit)
+    {
+        this.isExit = isExit;
+    }
+
+    public boolean isOccupied() {
+        return isOccupied;
+    }
+
+    public void setOccupied(boolean isOccupied) {
+        this.isOccupied = isOccupied;
+    }
+
+
+    public boolean isBonus() {
+        return isBonus;
+    }
+
+    public void setBonus(boolean isBonus) {
+        this.isBonus = isBonus;
+    }
+
+    public boolean isTransporter() {
+        return isTransporter;
     }
 
     public int getZoneId() {

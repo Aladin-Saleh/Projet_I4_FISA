@@ -33,6 +33,24 @@ public class JSONHandler {
         return null;
     }
 
+    // Ecriture d'une grappe de données au format JSON
+    public String writeJSON(Map<String, String> map)
+    {
+        try 
+        {
+            String json = mapper.writeValueAsString(map);
+            System.out.println("Ecriture de la grappe de données au format JSON effectuée avec succès.");
+            return json;
+        } 
+        catch (Exception e) 
+        {
+            System.err.println("Erreur lors de l'écriture de la grappe de données au format JSON. " + e.getMessage());
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     public ObjectMapper getMapper() 
     {

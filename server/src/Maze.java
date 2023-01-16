@@ -1,37 +1,35 @@
-import java.nio.file.SecureDirectoryStream;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Stack;
+import java.awt.Graphics;
+import java.awt.*;
 
 public class Maze
 {
     private Cell[][] map;
+    private Random randomizer;
+    private int rows;
+    private int cols;
 
     // Constructeur de Maze de taille rows x cols
     public Maze(int rows,int cols)
     {
-        map = new Cell[rows][cols];
+        this.map = new Cell[rows][cols];
+        this.rows = rows;
+        this.cols = cols;
+        this.randomizer = new Random();
 
         this.initialiseMap();
-        // Random random = new Random();
         this.generateViaDepthFirst();
-        // if(random.nextInt(2)==0)
-        // {
-        //     this.generateViaDepthFirst();
-        // }
-        // else
-        // {
-        //     this.generateViaKruskal();
-        // }
     }
 
     // Fonction qui initialise le tableau this.map avec des Cell ayant un identifiant unique
     private void initialiseMap() 
     {
+        // Initialisation des cellules, on leur donne un identifiant unique (pas de voisins)
         int cpt = 0;
-        for(int i=0; i< this.map.length;i++)
+        for(int i = 0; i < this.map.length; i++)
         {
-            for(int j = 0;j<this.map[i].length;j++)
+            for(int j = 0; j < this.map[i].length; j++)
             {
                 this.map[i][j] = new Cell(cpt,i,j);
                 // System.out.println("Initialisation cellule isVisited : "+this.map[i][j].getIsVisited());
@@ -39,21 +37,30 @@ public class Maze
             }
         }
 
-        for(int i=0; i< this.map.length;i++)
+        for(int i = 0; i < this.map.length; i++)
         {
-            for(int j = 0;j<this.map[i].length;j++)
+            for(int j = 0; j < this.map[i].length; j++)
             {
-                int[] xDirection = {i,i+1,i,i-1};
-                int[] yDirection = {j+1,j,j-1,j};
+                /**
+                 * |         | i, j-1  |        |    
+                 * | i-1, j  | i, j    | i+1, j |
+                 * |         | i, j+1  |        |
+                 */
+                int[] xDirection = {i, i+1, i, i-1};
+                int[] yDirection = {j+1, j, j-1, j};
+
+                // Les voisins de la cellule courante stocké dans une liste
                 ArrayList<Cell> neighbors = new ArrayList<Cell>();
-                for( int k = 0; k < 4; k++)
+
+                for( int k = 0; k < xDirection.length; k++)
                 {   
                     if(doesExistCell(xDirection[k], yDirection[k]))
                     {
-                        neighbors.add(this.map[xDirection[k]][yDirection[k]]);
+                        neighbors.add(this.map[xDirection[k]][yDirection[k]]); // Ajout du voisin dans la liste
                     }
                 }
-                this.map[i][j].setNeighbors(neighbors);
+                // On donne la liste des voisins à la cellule courante une fois qu'on a parcouru tous les voisins existants
+                this.map[i][j].setNeighbors(neighbors); 
             }
         }
     }
@@ -65,6 +72,7 @@ public class Maze
         int x         = random.nextInt(this.map.length);
         int y         = random.nextInt(this.map[0].length);
         recursiveDepthFirst(this.map[x][y]);
+        this.createExit(this.map.length, this.map[0].length);
     }
 
     // Fonction récursive qui détruit le mur entre la cellule current et une cellule voisine aléatoire non visitée
@@ -75,6 +83,7 @@ public class Maze
         int nbPossibleDirections = numberOfPossibleDirections(current);
         Random random            = new Random();
         int direction            = random.nextInt(current.getNeighbors().size());
+        
         while (nbPossibleDirections > 0)
         {
             Cell chosenCell      = current.getNeighbors().get(direction);
@@ -85,6 +94,22 @@ public class Maze
             }
             nbPossibleDirections = numberOfPossibleDirections(current);
             direction            = random.nextInt(current.getNeighbors().size());
+        }
+    }
+
+    public void createExit(int xLength, int yLength)
+    {
+        Random random = new Random();
+        int x         = random.nextInt(xLength);
+        int y         = random.nextInt(yLength);
+        
+        if (this.doesExistCell(x, y))
+        {
+            this.map[x][y].setExit(true);
+        }
+        else
+        {
+            this.createExit(xLength, yLength);
         }
     }
 
@@ -116,13 +141,13 @@ public class Maze
         }
     }
 
-    // Fonction qui retourne le nombre de direction possible depuis la cellule [x,y]dans le tableau this.map
+    // Fonction qui retourne le nombre de direction possible depuis la cellule [x,y] dans le tableau this.map
     private int numberOfPossibleDirections(Cell current) 
     {
         int nbDirections = 0;
         for (Cell cell : current.getNeighbors()) {
             if(!cell.getIsVisited())
-            {
+            {   
                 nbDirections++;
             }
         }
@@ -140,21 +165,104 @@ public class Maze
         return doesExist;
     }
 
-    // TODO : algorithme de génération de labryrinth de Kruskal
-    // private void generateViaKruskal()
-    // {
-
-    // }
-
-    // Fonction qui retourne le labryrinthe
     public Cell[][] getMap()
     {
         return this.map;
     }
 
+    public void setExit(int x, int y)
+    {
+        this.map[x][y].setExit(true);
+    }
+
+
+    public void paintMaze(Graphics gPaint)
+    {
+        gPaint.setColor(Color.BLACK);
+
+        for(int i = 0; i < this.map.length; i++)
+        {
+            for(int j = 0; j < this.map[i].length; j++)
+            {
+                Cell current = this.map[i][j];
+                if (current.isOccupied())
+                {
+                    gPaint.setColor(Color.YELLOW);
+                    // Fill circle
+                    gPaint.fillOval(j*20, i*20, 20, 20);
+                    gPaint.setColor(Color.BLACK);
+                }
+                if (current.isBonus())
+                {
+                    gPaint.setColor(Color.GREEN);
+                    gPaint.fillRect(j*20, i*20, 20, 20);
+                    gPaint.setColor(Color.BLACK);
+                }
+                if (current.isTransporter())
+                {
+                    gPaint.setColor(Color.BLUE);
+                    gPaint.fillRect(j*20, i*20, 20, 20);
+                    gPaint.setColor(Color.BLACK);
+                }
+                if (current.isExit())
+                {
+                    gPaint.setColor(Color.RED);
+                    gPaint.fillRect(j*20, i*20, 20, 20);
+                    gPaint.setColor(Color.BLACK);
+                }
+                if(current.getNorthWall())
+                {
+                    gPaint.drawLine(j*20, i*20, (j+1)*20, i*20);
+                }
+                if(current.getSouthWall())
+                {
+                    gPaint.drawLine(j*20, (i+1)*20, (j+1)*20, (i+1)*20);
+                }
+                if(current.getWestWall())
+                {
+                    gPaint.drawLine(j*20, i*20, j*20, (i+1)*20);
+                }
+                if(current.getEastWall())
+                {
+                    gPaint.drawLine((j+1)*20, i*20, (j+1)*20, (i+1)*20);
+                }
+            }
+        }
+
+    }
+
+
+
+    public int[] getFreeCell()
+    {
+        int[] freeCell = new int[2];
+        boolean isFreeCell = false;
+
+
+
+        while (!isFreeCell)
+        {
+
+            int x = this.randomizer.nextInt(this.map.length);
+            int y = this.randomizer.nextInt(this.map[0].length);
+            if (this.doesExistCell(x, y) && !this.map[x][y].isExit() && !this.map[x][y].isTransporter())
+            {
+                System.out.println("getFreeCell x : " + x + " y : " + y);
+                freeCell[0] = x;
+                freeCell[1] = y;
+                this.map[x][y].setOccupied(true);
+                isFreeCell = true;
+            }
+        }
+        
+        return freeCell;
+    }
+
+
+
 
     // Fonction qui dessine le Mazee
-    public void Display()
+    public void diplayMaze()
     {
         for(int i = 0;i < (this.map.length*2)+1; i++){
             System.out.print("_");
@@ -187,5 +295,25 @@ public class Maze
             }
             System.out.println();
         }
+    }
+
+    public int getRows()
+    {
+        return this.rows;
+    }
+
+    public int getCols()
+    {
+        return this.cols;
+    }
+
+    public void setRows(int rows)
+    {
+        this.rows = rows;
+    }
+
+    public void setCols(int cols)
+    {
+        this.cols = cols;
     }
 }

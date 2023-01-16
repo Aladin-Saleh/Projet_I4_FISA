@@ -1,6 +1,9 @@
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
-
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
 public class Turtle 
 {
     
@@ -11,65 +14,36 @@ public class Turtle
     public static final String WEST     = "W";
 
 
+    private Cell[][] map;
+    private int     x;
+    private int     y;
 
+    private Socket  socket;
+    private Screen  screen;
+    private KeyHandler keyHandler;
 
-    // Matrice vide de 10x10
-    private int[][] matrix = new int[10][10];
-
-    // Position de la tortue
-    private int x = 0;
-    private int y = 0;
-
-    // Direction de la tortue
-    private String direction;
-    
-    private Client client;
-
-
-    public Turtle() 
-    {
-        this.direction = NORTH;
-
-        // Initialisation de la matrice
-        for (int i = 0; i < this.matrix.length; i++) {
-            for (int j = 0; j < this.matrix[i].length; j++) {
-                this.matrix[i][j] = 0;
-            }
-        }
-
-        try
-        {
-            this.client = new Client(new Socket(InetAddress.getLocalHost(),5000));
-            this.client.listen();
-            this.client.sendMessage();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
 
     public Turtle(int port)
     {
-        this.direction = NORTH;
-
-        // Initialisation de la matrice
-        for (int i = 0; i < this.matrix.length; i++) {
-            for (int j = 0; j < this.matrix[i].length; j++) {
-                this.matrix[i][j] = 0;
-            }
-        }
-
-        try
+        try 
         {
-            this.client = new Client(new Socket(InetAddress.getLocalHost(),port));
-            this.client.listen();
-            this.client.sendMessage();
-        }
-        catch (Exception e)
+
+            this.socket = new Socket(InetAddress.getLocalHost(),port);
+            Client client   = new Client(this.socket, this.map);
+            this.keyHandler = new KeyHandler();
+            this.screen = new Screen(this.keyHandler);
+
+            client.listen();
+            client.sendMessage();
+        } 
+        catch (IOException e)
         {
+            System.err.println("Erreur lors de la connexion au serveur");
             e.printStackTrace();
         }
+
+
     }
+    
 
 }

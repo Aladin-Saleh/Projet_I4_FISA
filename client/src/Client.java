@@ -13,15 +13,19 @@ public class Client
     private BufferedWriter bWriter;
     private BufferedReader readInput;
     private Socket         socket;
+    private JSONHandler    jsonHandler;
+    private Cell[][]       map;
 
-    public Client(Socket socket)
+    public Client(Socket socket, Cell[][] map)
     {
         try
         {
-            this.socket     = socket;
-            this.bReader    = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            this.bWriter    = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            this.readInput  = new BufferedReader(new InputStreamReader(System.in));
+            this.map            = map;
+            this.jsonHandler    = new JSONHandler();
+            this.socket         = socket;
+            this.bReader        = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            this.bWriter        = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            this.readInput      = new BufferedReader(new InputStreamReader(System.in));
         } 
         catch (Exception e)
         {
@@ -99,7 +103,30 @@ public class Client
                             message = bReader.readLine();
                             if (message != null)
                             {
-                                System.out.println(message);
+                                System.out.println(jsonHandler.readJSON(message).get("position"));
+                                System.out.println(jsonHandler.readJSON(message).get("maze"));
+                                if (jsonHandler.readJSON(message).get("maze") != null)
+                                {
+                                    int xLength = Integer.parseInt(jsonHandler.readJSON(message).get("maze").toString().split(",")[0], 10);
+                                    int yLength = Integer.parseInt(jsonHandler.readJSON(message).get("maze").toString().split(",")[1], 10);
+                                    map = new Cell[xLength][yLength];
+
+                                    for (int i = 0; i < xLength; i++)
+                                    {
+                                        for (int j = 0; j < yLength; j++)
+                                        {
+                                            map[i][j] = new Cell(i, j);
+                                        }
+                                    }
+                                }
+
+                                if (jsonHandler.readJSON(message).get("position") != null)
+                                {
+                                    int x = Integer.parseInt(jsonHandler.readJSON(message).get("position").toString().split(",")[0], 10);
+                                    int y = Integer.parseInt(jsonHandler.readJSON(message).get("position").toString().split(",")[1], 10);
+                                    // map[x][y].setTurtle(true);
+                                }
+                                
                             }
                         }
                         catch (Exception e)
