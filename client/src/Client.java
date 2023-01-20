@@ -12,13 +12,15 @@ public class Client
     private BufferedReader readInput;
     private Socket         socket;
     private JSONHandler    jsonHandler;
-    private Cell[][]       map;
+    private Maze           map;
+    private RequestHandler requestHandler;
 
-    public Client(Socket socket, Cell[][] map)
+    public Client(Socket socket, Maze map)
     {
         try
         {
             this.map            = map;
+            this.requestHandler = new RequestHandler(this.map);
             this.jsonHandler    = new JSONHandler();
             this.socket         = socket;
             this.bReader        = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -97,35 +99,13 @@ public class Client
                             message = bReader.readLine();
                             if (message != null)
                             {
-                                System.out.println(jsonHandler.readJSON(message).get("position"));
-                                System.out.println(jsonHandler.readJSON(message).get("maze"));
-                                if (jsonHandler.readJSON(message).get("maze") != null)
-                                {
-                                    int xLength = Integer.parseInt(jsonHandler.readJSON(message).get("maze").toString().split(",")[0], 10);
-                                    int yLength = Integer.parseInt(jsonHandler.readJSON(message).get("maze").toString().split(",")[1], 10);
-                                    map = new Cell[xLength][yLength];
-
-                                    for (int i = 0; i < xLength; i++)
-                                    {
-                                        for (int j = 0; j < yLength; j++)
-                                        {
-                                            map[i][j] = new Cell(i, j);
-                                        }
-                                    }
-                                }
-
-                                if (jsonHandler.readJSON(message).get("position") != null)
-                                {
-                                    int x = Integer.parseInt(jsonHandler.readJSON(message).get("position").toString().split(",")[0], 10);
-                                    int y = Integer.parseInt(jsonHandler.readJSON(message).get("position").toString().split(",")[1], 10);
-                                    // map[x][y].setTurtle(true);
-                                }
-                                
+                                requestHandler.handleRequest(message);
                             }
                         }
                         catch (Exception e)
                         {
                             System.out.println("[Client]: " + e.getMessage());
+                            e.printStackTrace();
                             close(socket, bReader, bWriter);
                         }
                     }

@@ -13,7 +13,7 @@ public class Turtle
     public static final String WEST     = "W";
 
 
-    private Cell[][] map;
+    private Maze   map;
     private int     x;
     private int     y;
 
@@ -27,10 +27,11 @@ public class Turtle
         try 
         {
 
+            this.map = new Maze();
             this.socket = new Socket(InetAddress.getLocalHost(),port);
             Client client   = new Client(this.socket, this.map);
             this.keyHandler = new KeyHandler();
-            this.screen = new Screen(this.keyHandler);
+            this.screen = new Screen(this.keyHandler, this.map);
 
             client.listen();
             client.sendMessage();

@@ -21,10 +21,10 @@ public class Cell {
 
     public Cell(int x, int y)
     {
-        this.eastWall   = true;
-        this.westWall   = true;
-        this.southWall  = true;
-        this.northWall  = true;
+        this.eastWall   = false;
+        this.westWall   = false;
+        this.southWall  = false;
+        this.northWall  = false;
         this.isTransporter = false;
         this.isBonus    = false;
         this.isExit     = false;
@@ -34,6 +34,34 @@ public class Cell {
         this.y = y;
     }
 
+
+    // Getters
+    public boolean getEastWall()   { return this.eastWall; }
+    public boolean getWestWall()   { return this.westWall; }
+    public boolean getSouthWall()  { return this.southWall; }
+    public boolean getNorthWall()  { return this.northWall; }
+
+    public boolean getIsTransporter() { return this.isTransporter; }
+    public boolean getIsBonus()    { return this.isBonus; }
+    public boolean getIsExit()     { return this.isExit; }
+    public boolean getIsKnown()    { return this.isKnown; }
+
+    public int getX() { return this.x; }
+    public int getY() { return this.y; }
+
+    // Setters
+    public void setEastWall(boolean eastWall)   { this.eastWall = eastWall; }
+    public void setWestWall(boolean westWall)   { this.westWall = westWall; }
+    public void setSouthWall(boolean southWall) { this.southWall = southWall; }
+    public void setNorthWall(boolean northWall) { this.northWall = northWall; }
+
+    public void setIsTransporter(boolean isTransporter) { this.isTransporter = isTransporter; }
+    public void setIsBonus(boolean isBonus)    { this.isBonus = isBonus; }
+    public void setIsExit(boolean isExit)     { this.isExit = isExit; }
+    public void setIsKnown(boolean isKnown)    { this.isKnown = isKnown; }
+
+    public void setX(int x) { this.x = x; }
+    public void setY(int y) { this.y = y; }
 
 
 

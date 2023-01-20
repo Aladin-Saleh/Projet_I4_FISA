@@ -143,8 +143,14 @@ public class ClientHandler implements Runnable {
         // this.sendMessage(this.gameZone.getRandomEmptyCase()[0] + " " + this.gameZone.getRandomEmptyCase()[1]);
         Map<String, String> map = new HashMap<String, String>();
         // System.out.println(this.maze.getFreeCell()[0] + " " + this.maze.getFreeCell()[1]);
-        int[] position = new int[this.maze.getFreeCell().length];
+        int[] position = this.maze.getFreeCell();
+
         map.put("position", position[0] + "," + position[1]);
+        map.put("positionInfoEast", this.maze.getMap()[position[0]][position[1]].getEastWall()+"");
+        map.put("positionInfoWest", this.maze.getMap()[position[0]][position[1]].getWestWall()+"");
+        map.put("positionInfoNorth", this.maze.getMap()[position[0]][position[1]].getNorthWall()+"");
+        map.put("positionInfoSouth", this.maze.getMap()[position[0]][position[1]].getSouthWall()+"");
+
         map.put("maze", this.maze.getRows() + "," + this.maze.getCols());
         this.sendMessage(this.jsonHandler.writeJSON(map));
         while (!this.socket.isClosed())
