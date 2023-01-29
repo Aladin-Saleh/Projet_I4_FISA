@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Display extends JComponent implements Runnable {
+public class Display extends JComponent {
 
     private Maze map;
 
@@ -13,6 +13,9 @@ public class Display extends JComponent implements Runnable {
     @Override
     protected void paintComponent(Graphics p) 
     {
+        // Set the background color to black
+        p.setColor(Color.BLACK);
+        p.fillRect(0, 0, 900, 900);
         this.map.updateMaze();
         // if map is null, display loading screen
         if (this.map.getMap() == null && this.map.getStartX() == -1 && this.map.getStartY() == -1)
@@ -30,15 +33,11 @@ public class Display extends JComponent implements Runnable {
                 for (int j = 0; j < this.map.getMap()[0].length; j++)
                 {
 
-                    if (this.map.getMap()[i][j].getIsKnown())
+                    if (this.map.getMap()[i][j].getIsOccupied())
                     {
-                        // p.setColor(Color.GREEN);
+                        p.setColor(Color.YELLOW);
                         // p.fillRect(i*30, j*30, 30, 30);
-                    }
-                    else
-                    {
-                        // p.setColor(Color.BLACK);
-                        // p.fillRect(i*30, j*30, 30, 30);
+                        p.fillOval(j*30, i*30, 30, 30);
                     }
 
                     if (this.map.getMap()[i][j].getEastWall())
@@ -73,13 +72,5 @@ public class Display extends JComponent implements Runnable {
 
     }
 
-    @Override
-    public void run() {
-        while (true)
-        {
-            this.repaint();
-        }
-        
-    }
 
 }

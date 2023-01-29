@@ -16,6 +16,8 @@ public class Cell {
 
     private boolean isKnown; // Si la cellule est connue ou non
 
+    private boolean isOccupied;
+
     private int x;
     private int y;
 
@@ -29,6 +31,7 @@ public class Cell {
         this.isBonus    = false;
         this.isExit     = false;
         this.isKnown    = false;
+        this.isOccupied = false;
 
         this.x = x;
         this.y = y;
@@ -45,6 +48,7 @@ public class Cell {
     public boolean getIsBonus()    { return this.isBonus; }
     public boolean getIsExit()     { return this.isExit; }
     public boolean getIsKnown()    { return this.isKnown; }
+    public boolean getIsOccupied() { return this.isOccupied; }
 
     public int getX() { return this.x; }
     public int getY() { return this.y; }
@@ -59,6 +63,7 @@ public class Cell {
     public void setIsBonus(boolean isBonus)    { this.isBonus = isBonus; }
     public void setIsExit(boolean isExit)     { this.isExit = isExit; }
     public void setIsKnown(boolean isKnown)    { this.isKnown = isKnown; }
+    public void setIsOccupied(boolean isOccupied) { this.isOccupied = isOccupied; }
 
     public void setX(int x) { this.x = x; }
     public void setY(int y) { this.y = y; }

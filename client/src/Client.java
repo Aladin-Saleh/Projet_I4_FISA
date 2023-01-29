@@ -82,6 +82,25 @@ public class Client
         }
     }
 
+    public void sendMessage(String message)
+    {
+        try 
+        {
+            if (this.socket.isConnected())
+            {
+                bWriter.write(message);
+                bWriter.newLine();
+                bWriter.flush();
+                System.out.println("Envoi de : " + message );
+            }
+        }
+        catch (IOException err) 
+        {
+            err.printStackTrace();
+            close(this.socket,this.bReader,this.bWriter);
+        }
+    }
+
 
     public void listen()
     {

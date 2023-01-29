@@ -21,11 +21,13 @@ public class ClientHandler implements Runnable {
     private Maze            maze;
     private JSONHandler     jsonHandler;
     private Display         display;
+    private RequestHandler  requestHandler;
 
     public ClientHandler(Socket socket,GameZone gameZone)
     {
         this.gameZone   = gameZone;
         this.jsonHandler = new JSONHandler();
+        // this.requestHandler = new RequestHandler(this);
         try
         {
             this.socket = socket;
@@ -45,6 +47,7 @@ public class ClientHandler implements Runnable {
         this.maze = maze;
         this.display = display;
         this.jsonHandler = new JSONHandler();
+        this.requestHandler = new RequestHandler(this, maze);
         try
         {
             this.socket = socket;
@@ -162,7 +165,10 @@ public class ClientHandler implements Runnable {
                 if (s != null)
                 {
                     System.out.println("[ClientHandler] : " + s);
-                    this.broadcast(s);
+                    this.requestHandler.handleRequest(s);
+
+                    // this.broadcast(s);
+                    
                 }
                 else
                 {
