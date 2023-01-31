@@ -8,6 +8,7 @@ public class Display extends JComponent {
     public Display(Maze map) 
     {
         this.map = map;
+        this.map.setGUI(this);
     }
 
     @Override

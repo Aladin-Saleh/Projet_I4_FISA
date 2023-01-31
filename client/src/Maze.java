@@ -12,6 +12,7 @@ public class Maze {
     private boolean west;
     private boolean north;
     private boolean south;
+    private Display gui;
 
     public Maze()
     {
@@ -20,6 +21,7 @@ public class Maze {
         this.startX = -1;
         this.startY = -1;
         this.map = null;
+        this.gui = null;
     }
 
     public Maze(int rows, int cols)
@@ -29,6 +31,17 @@ public class Maze {
         this.startX = -1;
         this.startY = -1;
         this.map = new Cell[rows][cols];
+        this.gui = null;
+    }
+
+    public void setGUI(Display gui)
+    {
+        this.gui = gui;
+    }
+
+    public Display getGUI()
+    {
+        return this.gui;
     }
 
     public void updateMaze()
