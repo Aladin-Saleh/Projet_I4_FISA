@@ -4,6 +4,7 @@ public class Screen extends JFrame
 {
 
     private KeyHandler keyHandler;
+    private Display gui;
 
     public Screen()
     {
@@ -16,9 +17,8 @@ public class Screen extends JFrame
         this.setVisible(true);
     }
 
-    public Screen(KeyHandler keyHandler, Maze map)
+    public Screen(Maze map, Client client)
     {   
-        this.keyHandler = keyHandler;
 
 
 
@@ -29,18 +29,24 @@ public class Screen extends JFrame
         this.setResizable(true);
 
 
-        this.addKeyListener(keyHandler);
-        Display gui = new Display(map);
+        this.gui = new Display(map);
         this.add(gui);
+        
+        this.keyHandler = new KeyHandler(map, client, gui);
 
 
 
-        new Thread(gui).start();
 
+        this.addKeyListener(keyHandler);
 
         this.setVisible(true);
     }
 
+
+    public Display getGUI()
+    {
+        return this.gui;
+    }
 
 
 

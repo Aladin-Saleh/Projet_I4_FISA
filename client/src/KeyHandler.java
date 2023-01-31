@@ -1,28 +1,137 @@
 import java.awt.event.*;
+import java.util.HashMap;
+import java.util.Map;
 public class KeyHandler implements KeyListener 
 {
 
+    private Maze map;
+    private Client client; 
+    private JSONHandler jsonHandler;
+    private Display display;
 
-
-    public KeyHandler()
+    public KeyHandler(Maze map, Client client, Display display)
     {
+        this.map = map;
+        this.client = client;
+        this.display = display;
+        this.jsonHandler = new JSONHandler();
         System.out.println("KeyHandler created");
     }
 
 
-
-
     @Override
     public void keyTyped(KeyEvent e) {
-        System.out.println(e.getKeyChar());
+        System.out.println("Key pressed " + e.getKeyChar());
+
+        if (this.display != null) 
+        {
+            this.display.repaint();
+            if (e.getKeyChar() == 'z')
+            {
+                if (!this.map.isWall("north"))
+                {
+                    // Envoi une requete au serveur pour demander les informations de la case
+                    if ((this.map.getStartX() - 1) > -1 && this.map.getStartY() > -1)
+                    {
+                        
+                        if (!this.map.getMap()[this.map.getStartX() - 1][this.map.getStartY()].getIsKnown())
+                        {
+                            this.map.getMap()[this.map.getStartX() - 1][this.map.getStartY()].setEastWall(false);
+                            this.map.getMap()[this.map.getStartX() - 1][this.map.getStartY()].setWestWall(false);
+                            this.map.getMap()[this.map.getStartX() - 1][this.map.getStartY()].setNorthWall(false);
+                            this.map.getMap()[this.map.getStartX() - 1][this.map.getStartY()].setSouthWall(false);
+                        
+                        }
+                        
+        
+        
+                        Map<String, String> position = new HashMap<String, String>();
+                        position.put("position", (this.map.getStartX() - 1) + "," + (this.map.getStartY()));
+                        this.client.sendMessage(this.jsonHandler.writeJSON(position));
+                    }
+                }
+            }
+            else if (e.getKeyChar() == 's')
+            {
+                if (!this.map.isWall("south"))
+                {
+                    // Envoi une requete au serveur pour demander les informations de la case
+                    if ((this.map.getStartX() + 1) > -1 && this.map.getStartY() > -1)
+                    {
+                        if (!this.map.getMap()[this.map.getStartX() + 1][this.map.getStartY()].getIsKnown())
+                        {
+                            this.map.getMap()[this.map.getStartX() + 1][this.map.getStartY()].setEastWall(false);
+                            this.map.getMap()[this.map.getStartX() + 1][this.map.getStartY()].setWestWall(false);
+                            this.map.getMap()[this.map.getStartX() + 1][this.map.getStartY()].setNorthWall(false);
+                            this.map.getMap()[this.map.getStartX() + 1][this.map.getStartY()].setSouthWall(false);      
+        
+                        }
+                        
+        
+                        Map<String, String> position = new HashMap<String, String>();
+                        // position.put("position", this.map.getStartX() + "," + (this.map.getStartY() + 1));
+                        position.put("position", (this.map.getStartX() + 1) + "," + (this.map.getStartY()));
+        
+                        this.client.sendMessage(this.jsonHandler.writeJSON(position));
+                    }
+                }
+    
+            }
+            else if (e.getKeyChar() == 'd')
+            {
+                if (!this.map.isWall("east"))
+                {
+                    if ((this.map.getStartX()) > -1 && (this.map.getStartY() + 1) > -1)
+                    {
+                    // Envoi une requete au serveur pour demander les informations de la case
+                if (!this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].getIsKnown())
+                {
+                    this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setEastWall(false);
+                    this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setWestWall(false);
+                    this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setNorthWall(false);
+                    this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setSouthWall(false);
+
+                }
+    
+                    Map<String, String> position = new HashMap<String, String>();
+                    position.put("position", (this.map.getStartX()) + "," + (this.map.getStartY() + 1));
+                    this.client.sendMessage(this.jsonHandler.writeJSON(position));
+                    }
+                }
+            }
+            else if (e.getKeyChar() == 'q')
+            {
+                if (!this.map.isWall("west"))
+                {
+                    // Envoi une requete au serveur pour demander les informations de la case
+                    if ((this.map.getStartX()) > -1 && (this.map.getStartY() - 1) > -1)
+                    {
+                        if (!this.map.getMap()[this.map.getStartX()][this.map.getStartY() - 1].getIsKnown())
+                        {
+                            this.map.getMap()[this.map.getStartX()][this.map.getStartY() - 1].setEastWall(false);
+                            this.map.getMap()[this.map.getStartX()][this.map.getStartY() - 1].setWestWall(false);
+                            this.map.getMap()[this.map.getStartX()][this.map.getStartY() - 1].setNorthWall(false);
+                            this.map.getMap()[this.map.getStartX()][this.map.getStartY() - 1].setSouthWall(false);
+        
+                        }
+                        
+                        Map<String, String> position = new HashMap<String, String>();
+                        // position.put("position", (this.map.getStartX() - 1) + "," + this.map.getStartY());
+                        position.put("position", (this.map.getStartX()) + "," + (this.map.getStartY() - 1));
+        
+                        this.client.sendMessage(this.jsonHandler.writeJSON(position));
+                    }
+                }
+            }
+            this.display.repaint();
+        }
+
 
 
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // TODO Auto-generated method stub
-        
     }
 
     @Override

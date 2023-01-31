@@ -28,35 +28,40 @@ public class RequestHandler
             {
                 int x = Integer.parseInt(jsonHandler.readJSON(message).get("position").toString().split(",")[0], 10);
                 int y = Integer.parseInt(jsonHandler.readJSON(message).get("position").toString().split(",")[1], 10);
+                if (!(this.map.getStartX() == -1) && !(this.map.getStartY() == -1))
+                {
+                    this.map.getMap()[this.map.getStartX()][this.map.getStartY()].setIsOccupied(false);
+                }
+
                 this.map.setStartX(x);
                 this.map.setStartY(y);
 
                 if (jsonHandler.readJSON(message).get("positionInfoWest") != null)
                 {
                     boolean isWall = Boolean.parseBoolean(jsonHandler.readJSON(message).get("positionInfoWest").toString());
-                    if (isWall) this.map.setWest(new int[]{x,y});
-                    System.out.println("West wall setted to " + isWall);
+                    System.out.println("West is " + isWall);
+                    this.map.setWest(isWall);
                 }
 
                 if (jsonHandler.readJSON(message).get("positionInfoEast") != null)
                 {
                     boolean isWall = Boolean.parseBoolean(jsonHandler.readJSON(message).get("positionInfoEast").toString());
-                    if (isWall) this.map.setEast(new int[]{x,y});
-                    System.out.println("East wall setted to " + isWall);
+                    System.out.println("East is " + isWall);
+                    this.map.setEast(isWall);
                 }
 
                 if (jsonHandler.readJSON(message).get("positionInfoNorth") != null)
                 {
                     boolean isWall = Boolean.parseBoolean(jsonHandler.readJSON(message).get("positionInfoNorth").toString());
-                    if (isWall) this.map.setNorth(new int[]{x,y});
-                    System.out.println("North wall setted to " + isWall);
+                    System.out.println("North is " + isWall);
+                    this.map.setNorth(isWall);
                 }
 
                 if (jsonHandler.readJSON(message).get("positionInfoSouth") != null)
                 {
                     boolean isWall = Boolean.parseBoolean(jsonHandler.readJSON(message).get("positionInfoSouth").toString());
-                    if (isWall) this.map.setSouth(new int[]{x,y});
-                    System.out.println("South wall setted to " + isWall);
+                    System.out.println("South is " + isWall);
+                    this.map.setSouth(isWall);
                 }
 
 
