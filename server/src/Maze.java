@@ -185,46 +185,49 @@ public class Maze
             for(int j = 0; j < this.map[i].length; j++)
             {
                 Cell current = this.map[i][j];
+                // Display the x and y coordinates of the cell
+                gPaint.setColor(Color.BLACK);
+                // gPaint.drawString(current.getX() + "," + current.getY(), j*30, i*30);
                 if (current.isOccupied())
                 {
                     gPaint.setColor(Color.YELLOW);
                     // Fill circle
-                    gPaint.fillOval(j*20, i*20, 20, 20);
+                    gPaint.fillOval(j*30, i*30, 30, 30);
                     gPaint.setColor(Color.BLACK);
                 }
                 if (current.isBonus())
                 {
                     gPaint.setColor(Color.GREEN);
-                    gPaint.fillRect(j*20, i*20, 20, 20);
+                    gPaint.fillRect(j*30, i*30, 30, 30);
                     gPaint.setColor(Color.BLACK);
                 }
                 if (current.isTransporter())
                 {
                     gPaint.setColor(Color.BLUE);
-                    gPaint.fillRect(j*20, i*20, 20, 20);
+                    gPaint.fillRect(j*30, i*30, 30, 30);
                     gPaint.setColor(Color.BLACK);
                 }
                 if (current.isExit())
                 {
                     gPaint.setColor(Color.RED);
-                    gPaint.fillRect(j*20, i*20, 20, 20);
+                    gPaint.fillRect(j*30, i*30, 30, 30);
                     gPaint.setColor(Color.BLACK);
                 }
                 if(current.getNorthWall())
                 {
-                    gPaint.drawLine(j*20, i*20, (j+1)*20, i*20);
+                    gPaint.drawLine(j*30, i*30, (j+1)*30, i*30);
                 }
                 if(current.getSouthWall())
                 {
-                    gPaint.drawLine(j*20, (i+1)*20, (j+1)*20, (i+1)*20);
+                    gPaint.drawLine(j*30, (i+1)*30, (j+1)*30, (i+1)*30);
                 }
                 if(current.getWestWall())
                 {
-                    gPaint.drawLine(j*20, i*20, j*20, (i+1)*20);
+                    gPaint.drawLine(j*30, i*30, j*30, (i+1)*30);
                 }
                 if(current.getEastWall())
                 {
-                    gPaint.drawLine((j+1)*20, i*20, (j+1)*20, (i+1)*20);
+                    gPaint.drawLine((j+1)*30, i*30, (j+1)*30, (i+1)*30);
                 }
             }
         }

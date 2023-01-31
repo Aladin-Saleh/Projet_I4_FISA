@@ -8,10 +8,10 @@ public class Maze {
     private int startX;
     private int startY;
 
-    private int[] east = new int[2];
-    private int[] west = new int[2];
-    private int[] north = new int[2];
-    private int[] south = new int[2];
+    private boolean east;
+    private boolean west;
+    private boolean north;
+    private boolean south;
 
     public Maze()
     {
@@ -33,85 +33,56 @@ public class Maze {
 
     public void updateMaze()
     {
-        if (this.map != null)
+        if (this.map != null && startY != -1 && startX != -1)
         {
-            for (int i = 0; i < this.map.length; i++)
-            {
-                for (int j = 0; j < this.map[0].length; j++)
-                {
-                    this.map[i][j] = new Cell(i,j);
-                    if (i == this.startX && j == this.startY)
-                    {
-                        this.map[i][j].setIsKnown(true);
-                    }
+            this.map[startX][startY].setIsOccupied(true);
 
-                    if (this.east[0] == i && this.east[1] == j)
-                    {
-                        this.map[i][j].setEastWall(true);
-                    }
+            if (this.east) { this.map[startX][startY].setEastWall(east); }
+            if (this.west) { this.map[startX][startY].setWestWall(west); }
+            if (this.north) { this.map[startX][startY].setNorthWall(north); }
+            if (this.south) { this.map[startX][startY].setSouthWall(south); }
 
-                    if (this.west[0] == i && this.west[1] == j)
-                    {
-                        this.map[i][j].setWestWall(true);
-                    }
-
-                    if (this.north[0] == i && this.north[1] == j)
-                    {
-                        this.map[i][j].setNorthWall(true);
-                    }
-
-                    if (this.south[0] == i && this.south[1] == j)
-                    {
-                        this.map[i][j].setSouthWall(true);
-                    }
-
-
-                    
-                }
-            }
         }
     }
 
-
-    public void setEast(int[] east)
+    public boolean isWall(String direction)
     {
-        this.east = east;
+        if (direction.equals("east"))
+        {
+            return this.map[startX][startY + 1].getEastWall();
+        }
+
+        if (direction.equals("west"))
+        {
+            return this.map[startX][startY -1].getWestWall();
+        }
+
+        if (direction.equals("north"))
+        {
+            return this.map[startX - 1][startY].getNorthWall();
+        }
+
+        if (direction.equals("south"))
+        {
+            return this.map[startX + 1][startY].getSouthWall();
+        }
+
+        return false;
     }
 
-    public int[] getEast()
-    {
-        return this.east;
-    }
 
-    public void setWest(int[] west)
-    {
-        this.west = west;
-    }
+    // Getters 
+    public boolean getEast() { return this.east; }
+    public boolean getWest() { return this.west; }
+    public boolean getNorth() { return this.north; }
+    public boolean getSouth() { return this.south; }
 
-    public int[] getWest()
-    {
-        return this.west;
-    }
-
-    public void setNorth(int[] north)
-    {
-        this.north = north;
-    }
-
-    public int[] getNorth()
-    {
-        return this.north;
-    }
-
-    public void setSouth(int[] south)
-    {
-        this.south = south;
-    }
-
-    public int[] getSouth()
-    {
-        return this.south;
-    }
+    // Setters
+    public void setEast(boolean east) { this.east = east; }
+    public void setWest(boolean west) { this.west = west; }
+    public void setNorth(boolean north) { this.north = north; }
+    public void setSouth(boolean south) { this.south = south; }
+ 
 
 
 
@@ -151,6 +122,7 @@ public class Maze {
                 if (i == this.startX && j == this.startY)
                 {
                     this.map[i][j].setIsKnown(true);
+                    this.map[i][j].setIsOccupied(true);
                 }
             }
         }
