@@ -9,6 +9,7 @@ public class Maze
     private Random randomizer;
     private int rows;
     private int cols;
+    
 
     // Constructeur de Maze de taille rows x cols
     public Maze(int rows,int cols)
@@ -21,6 +22,8 @@ public class Maze
         this.initialiseMap();
         this.generateViaDepthFirst();
     }
+
+
 
     // Fonction qui initialise le tableau this.map avec des Cell ayant un identifiant unique
     private void initialiseMap() 

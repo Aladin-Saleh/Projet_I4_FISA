@@ -15,6 +15,10 @@ public class RequestHandler
     {
         if (message != null)
         {
+
+
+ 
+
             System.out.println("Message received: " + message);
             if (jsonHandler.readJSON(message).get("maze") != null)
             {
@@ -63,7 +67,11 @@ public class RequestHandler
                     System.out.println("South is " + isWall);
                     this.map.setSouth(isWall);
                 }
-
+                
+                if (this.map.getGUI() != null)
+                {
+                    this.map.getGUI().repaint();
+                }
 
 
 

@@ -28,12 +28,12 @@ public class KeyHandler implements KeyListener
             this.display.repaint();
             if (e.getKeyChar() == 'z')
             {
-                if (!this.map.isWall("north"))
-                {
+
+                    System.out.println("North wall is open");
                     // Envoi une requete au serveur pour demander les informations de la case
                     if ((this.map.getStartX() - 1) > -1 && this.map.getStartY() > -1)
                     {
-                        
+                        System.out.println("Sending request to server");
                         if (!this.map.getMap()[this.map.getStartX() - 1][this.map.getStartY()].getIsKnown())
                         {
                             this.map.getMap()[this.map.getStartX() - 1][this.map.getStartY()].setEastWall(false);
@@ -48,16 +48,18 @@ public class KeyHandler implements KeyListener
                         Map<String, String> position = new HashMap<String, String>();
                         position.put("position", (this.map.getStartX() - 1) + "," + (this.map.getStartY()));
                         this.client.sendMessage(this.jsonHandler.writeJSON(position));
+                        this.display.repaint();
                     }
-                }
+
             }
             else if (e.getKeyChar() == 's')
             {
-                if (!this.map.isWall("south"))
-                {
+
+                    System.out.println("South wall is open");
                     // Envoi une requete au serveur pour demander les informations de la case
                     if ((this.map.getStartX() + 1) > -1 && this.map.getStartY() > -1)
                     {
+                        System.out.println("Sending request to server");
                         if (!this.map.getMap()[this.map.getStartX() + 1][this.map.getStartY()].getIsKnown())
                         {
                             this.map.getMap()[this.map.getStartX() + 1][this.map.getStartY()].setEastWall(false);
@@ -73,39 +75,43 @@ public class KeyHandler implements KeyListener
                         position.put("position", (this.map.getStartX() + 1) + "," + (this.map.getStartY()));
         
                         this.client.sendMessage(this.jsonHandler.writeJSON(position));
+                        this.display.repaint();
                     }
-                }
+                
     
             }
             else if (e.getKeyChar() == 'd')
             {
-                if (!this.map.isWall("east"))
-                {
+
+
+                    System.out.println("East wall is open");
                     if ((this.map.getStartX()) > -1 && (this.map.getStartY() + 1) > -1)
                     {
-                    // Envoi une requete au serveur pour demander les informations de la case
-                if (!this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].getIsKnown())
-                {
-                    this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setEastWall(false);
-                    this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setWestWall(false);
-                    this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setNorthWall(false);
-                    this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setSouthWall(false);
+                        System.out.println("Sending request to server");
+                        // Envoi une requete au serveur pour demander les informations de la case
+                        if (!this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].getIsKnown())
+                        {
+                            this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setEastWall(false);
+                            this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setWestWall(false);
+                            this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setNorthWall(false);
+                            this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setSouthWall(false);
 
-                }
+                        }
     
-                    Map<String, String> position = new HashMap<String, String>();
-                    position.put("position", (this.map.getStartX()) + "," + (this.map.getStartY() + 1));
-                    this.client.sendMessage(this.jsonHandler.writeJSON(position));
+                        Map<String, String> position = new HashMap<String, String>();
+                        position.put("position", (this.map.getStartX()) + "," + (this.map.getStartY() + 1));
+                        this.client.sendMessage(this.jsonHandler.writeJSON(position));
                     }
-                }
+                
             }
             else if (e.getKeyChar() == 'q')
             {
-                if (!this.map.isWall("west"))
-                {
+
+                    System.out.println("West wall is open");
                     // Envoi une requete au serveur pour demander les informations de la case
                     if ((this.map.getStartX()) > -1 && (this.map.getStartY() - 1) > -1)
                     {
+                        System.out.println("Sending request to server");
                         if (!this.map.getMap()[this.map.getStartX()][this.map.getStartY() - 1].getIsKnown())
                         {
                             this.map.getMap()[this.map.getStartX()][this.map.getStartY() - 1].setEastWall(false);
@@ -121,7 +127,7 @@ public class KeyHandler implements KeyListener
         
                         this.client.sendMessage(this.jsonHandler.writeJSON(position));
                     }
-                }
+                
             }
             this.display.repaint();
         }
