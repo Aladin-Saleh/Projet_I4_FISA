@@ -14,13 +14,17 @@ public class Client
     private JSONHandler    jsonHandler;
     private Maze           map;
     private RequestHandler requestHandler;
+    private boolean        asWin;
+    private boolean        gameIsOver;
 
     public Client(Socket socket, Maze map)
     {
         try
         {
+            this.asWin          = false;
+            this.gameIsOver     = false;
             this.map            = map;
-            this.requestHandler = new RequestHandler(this.map);
+            this.requestHandler = new RequestHandler(this.map, this);
             this.jsonHandler    = new JSONHandler();
             this.socket         = socket;
             this.bReader        = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -102,6 +106,7 @@ public class Client
     }
 
 
+
     public void listen()
     {
         new Thread(
@@ -131,5 +136,25 @@ public class Client
                 }
             }
         ).start();
+    }
+
+    public void setAsWin(boolean asWin)
+    {
+        this.asWin = asWin;
+    }
+
+    public boolean getAsWin()
+    {
+        return this.asWin;
+    }
+
+    public void setGameIsOver(boolean gameIsOver)
+    {
+        this.gameIsOver = gameIsOver;
+    }
+
+    public boolean getGameIsOver()
+    {
+        return this.gameIsOver;
     }
 }
