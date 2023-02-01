@@ -23,3 +23,7 @@ hs_err_pid*
 
 # VSCode
 .vscode/
+
+# Executable .jar
+server/build/Main.jar
+client/build/Main.jar
