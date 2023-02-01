@@ -1,5 +1,9 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.*;
+import java.awt.image.BufferedImage;
 
 public class Display extends JComponent {
 
@@ -33,46 +37,49 @@ public class Display extends JComponent {
             }
             else
             {
-                // draw map
-                for (int i = 0; i < this.map.getMap().length; i++)
+                try
                 {
-                    for (int j = 0; j < this.map.getMap()[0].length; j++)
+                    BufferedImage knight = ImageIO.read(new File("res/knight.png"));
+                    // draw map
+                    for (int i = 0; i < this.map.getMap().length; i++)
                     {
-    
-                        if (this.map.getMap()[i][j].getIsOccupied())
+                        for (int j = 0; j < this.map.getMap()[0].length; j++)
                         {
-                            p.setColor(Color.YELLOW);
-                            // p.fillRect(i*30, j*30, 30, 30);
-                            p.fillOval(j*30, i*30, 30, 30);
+        
+                            if (this.map.getMap()[i][j].getIsOccupied())
+                            {
+                                p.drawImage(knight,j*30, i*30, null);
+                            }
+        
+                            if (this.map.getMap()[i][j].getEastWall())
+                            {
+                                p.setColor(Color.WHITE);
+                                p.drawLine((j+1)*30, i*30, (j+1)*30, (i+1)*30);
+                            }
+        
+                            if (this.map.getMap()[i][j].getWestWall())
+                            {
+                                p.setColor(Color.WHITE);
+                                p.drawLine(j*30, i*30, j*30, (i+1)*30);
+                            }
+        
+                            if (this.map.getMap()[i][j].getNorthWall())
+                            {
+                                p.setColor(Color.WHITE);
+                                p.drawLine(j*30, i*30, (j+1)*30, i*30);
+                            }
+        
+                            if (this.map.getMap()[i][j].getSouthWall())
+                            {
+                                p.setColor(Color.WHITE);
+                                p.drawLine(j*30, (i+1)*30, (j+1)*30, (i+1)*30);
+                            }
                         }
-    
-                        if (this.map.getMap()[i][j].getEastWall())
-                        {
-                            p.setColor(Color.RED);
-                            p.drawLine((j+1)*30, i*30, (j+1)*30, (i+1)*30);
-                        }
-    
-                        if (this.map.getMap()[i][j].getWestWall())
-                        {
-                            p.setColor(Color.RED);
-                            p.drawLine(j*30, i*30, j*30, (i+1)*30);
-                        }
-    
-                        if (this.map.getMap()[i][j].getNorthWall())
-                        {
-                            p.setColor(Color.RED);
-                            p.drawLine(j*30, i*30, (j+1)*30, i*30);
-                        }
-    
-                        if (this.map.getMap()[i][j].getSouthWall())
-                        {
-                            p.setColor(Color.RED);
-                            p.drawLine(j*30, (i+1)*30, (j+1)*30, (i+1)*30);
-                        }
-    
-    
-    
                     }
+                }
+                catch(Exception e)
+                {
+
                 }
             }
         }
@@ -83,10 +90,6 @@ public class Display extends JComponent {
             p.fillRect(0, 0, 900, 900);
             p.setColor(Color.WHITE);
             p.drawString(message, 450, 450);
-            
         }
-
     }
-
-
 }
