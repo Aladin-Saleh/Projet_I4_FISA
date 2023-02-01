@@ -26,6 +26,9 @@ public class KeyHandler implements KeyListener
         if (this.display != null) 
         {
             this.display.repaint();
+            Map<String, String> position = new HashMap<String, String>();
+            position.put("currentPosition", this.map.getStartX() + "," + this.map.getStartY());
+
             if (e.getKeyChar() == 'z')
             {
 
@@ -44,8 +47,7 @@ public class KeyHandler implements KeyListener
                         }
                         
         
-        
-                        Map<String, String> position = new HashMap<String, String>();
+                        position.put("direction", "N");
                         position.put("position", (this.map.getStartX() - 1) + "," + (this.map.getStartY()));
                         this.client.sendMessage(this.jsonHandler.writeJSON(position));
                         this.display.repaint();
@@ -70,8 +72,9 @@ public class KeyHandler implements KeyListener
                         }
                         
         
-                        Map<String, String> position = new HashMap<String, String>();
+                        // Map<String, String> position = new HashMap<String, String>();
                         // position.put("position", this.map.getStartX() + "," + (this.map.getStartY() + 1));
+                        position.put("direction", "S");
                         position.put("position", (this.map.getStartX() + 1) + "," + (this.map.getStartY()));
         
                         this.client.sendMessage(this.jsonHandler.writeJSON(position));
@@ -98,7 +101,8 @@ public class KeyHandler implements KeyListener
 
                         }
     
-                        Map<String, String> position = new HashMap<String, String>();
+                        // Map<String, String> position = new HashMap<String, String>();
+                        position.put("direction", "E");
                         position.put("position", (this.map.getStartX()) + "," + (this.map.getStartY() + 1));
                         this.client.sendMessage(this.jsonHandler.writeJSON(position));
                     }
@@ -121,8 +125,9 @@ public class KeyHandler implements KeyListener
         
                         }
                         
-                        Map<String, String> position = new HashMap<String, String>();
+                        // Map<String, String> position = new HashMap<String, String>();
                         // position.put("position", (this.map.getStartX() - 1) + "," + this.map.getStartY());
+                        position.put("direction", "W");
                         position.put("position", (this.map.getStartX()) + "," + (this.map.getStartY() - 1));
         
                         this.client.sendMessage(this.jsonHandler.writeJSON(position));

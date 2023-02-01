@@ -1,13 +1,18 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class RequestHandler 
 {
 
     private JSONHandler jsonHandler;
     private Maze map;
+    private Client client;
 
-    public RequestHandler(Maze map)
+    public RequestHandler(Maze map, Client client)
     {
         this.map = map;
         this.jsonHandler = new JSONHandler();
+        this.client = client;
     }
     
 
@@ -16,7 +21,14 @@ public class RequestHandler
         if (message != null)
         {
 
-
+            if (jsonHandler.readJSON(message).get("end") != null)
+            {
+                if (jsonHandler.readJSON(message).get("end").toString().equals("true"))
+                {
+                    this.client.setAsWin(false);
+                    this.client.setGameIsOver(true);
+                }
+            }
  
 
             System.out.println("Message received: " + message);
@@ -67,6 +79,25 @@ public class RequestHandler
                     System.out.println("South is " + isWall);
                     this.map.setSouth(isWall);
                 }
+
+                if (jsonHandler.readJSON(message).get("exit") != null)
+                {
+                    boolean isExit = Boolean.parseBoolean(jsonHandler.readJSON(message).get("exit").toString());
+                    System.out.println("Exit is " + isExit);
+
+                    if (isExit)
+                    {
+                        Map<String, String> response = new HashMap<String, String>();
+
+                        this.map.getMap()[this.map.getStartX()][this.map.getStartY()].setIsExit(true);
+                        response.put("exit", "true");
+                        this.client.sendMessage(jsonHandler.writeJSON(response));
+                        this.client.setAsWin(isExit);
+                        this.client.setGameIsOver(true);
+                    }
+
+                }
+
                 
                 if (this.map.getGUI() != null)
                 {
