@@ -9,12 +9,15 @@ public class KeyHandler implements KeyListener
     private JSONHandler jsonHandler;
     private Display display;
 
+    private String key;
+
     public KeyHandler(Maze map, Client client, Display display)
     {
         this.map = map;
         this.client = client;
         this.display = display;
         this.jsonHandler = new JSONHandler();
+        this.key = "";
         System.out.println("KeyHandler created");
     }
 
@@ -29,9 +32,11 @@ public class KeyHandler implements KeyListener
             Map<String, String> position = new HashMap<String, String>();
             position.put("currentPosition", this.map.getStartX() + "," + this.map.getStartY());
 
-            if (e.getKeyChar() == 'z')
+            if(this.key == "")
             {
-
+                this.key = e.getKeyText(e.getKeyCode());
+                if (e.getKeyChar() == 'z')
+                {
                     System.out.println("North wall is open");
                     // Envoi une requete au serveur pour demander les informations de la case
                     if ((this.map.getStartX() - 1) > -1 && this.map.getStartY() > -1)
@@ -46,17 +51,15 @@ public class KeyHandler implements KeyListener
                         
                         }
                         
-        
                         position.put("direction", "N");
                         position.put("position", (this.map.getStartX() - 1) + "," + (this.map.getStartY()));
                         this.client.sendMessage(this.jsonHandler.writeJSON(position));
                         this.display.repaint();
                     }
-
-            }
-            else if (e.getKeyChar() == 's')
-            {
-
+    
+                }
+                else if (e.getKeyChar() == 's')
+                {
                     System.out.println("South wall is open");
                     // Envoi une requete au serveur pour demander les informations de la case
                     if ((this.map.getStartX() + 1) > -1 && this.map.getStartY() > -1)
@@ -71,7 +74,6 @@ public class KeyHandler implements KeyListener
         
                         }
                         
-        
                         // Map<String, String> position = new HashMap<String, String>();
                         // position.put("position", this.map.getStartX() + "," + (this.map.getStartY() + 1));
                         position.put("direction", "S");
@@ -80,13 +82,11 @@ public class KeyHandler implements KeyListener
                         this.client.sendMessage(this.jsonHandler.writeJSON(position));
                         this.display.repaint();
                     }
-                
-    
-            }
-            else if (e.getKeyChar() == 'd')
-            {
-
-
+                    
+        
+                }
+                else if (e.getKeyChar() == 'd')
+                {
                     System.out.println("East wall is open");
                     if ((this.map.getStartX()) > -1 && (this.map.getStartY() + 1) > -1)
                     {
@@ -106,11 +106,10 @@ public class KeyHandler implements KeyListener
                         position.put("position", (this.map.getStartX()) + "," + (this.map.getStartY() + 1));
                         this.client.sendMessage(this.jsonHandler.writeJSON(position));
                     }
-                
-            }
-            else if (e.getKeyChar() == 'q')
-            {
-
+                    
+                }
+                else if (e.getKeyChar() == 'q')
+                {
                     System.out.println("West wall is open");
                     // Envoi une requete au serveur pour demander les informations de la case
                     if ((this.map.getStartX()) > -1 && (this.map.getStartY() - 1) > -1)
@@ -132,13 +131,11 @@ public class KeyHandler implements KeyListener
         
                         this.client.sendMessage(this.jsonHandler.writeJSON(position));
                     }
-                
+                    
+                }
+                this.display.repaint();
             }
-            this.display.repaint();
         }
-
-
-
     }
 
     @Override
@@ -148,7 +145,7 @@ public class KeyHandler implements KeyListener
     @Override
     public void keyReleased(KeyEvent e) {
         // TODO Auto-generated method stub
-        
+        this.key = "";
     }
     
 }
