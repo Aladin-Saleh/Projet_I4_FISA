@@ -98,19 +98,11 @@ public class RequestHandler
 
                 }
 
-                
                 if (this.map.getGUI() != null)
                 {
                     this.map.getGUI().repaint();
                 }
-
-
-
             }
         }
-    }
-
-
-
-    
+    }    
 }

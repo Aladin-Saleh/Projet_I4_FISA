@@ -96,11 +96,6 @@ public class Maze {
     public void setNorth(boolean north) { this.north = north; }
     public void setSouth(boolean south) { this.south = south; }
  
-
-
-
-
-
     public void setStartX(int startX)
     {
         this.startX = startX;
