@@ -1,1 +1,6 @@
 Main-Class: Main
+<<<<<<< HEAD
+Class-Path: jackson-annotations-2.14.0-rc2.jar jackson-core-2.14.0-rc2.jar jackson-databind-2.14.0-rc2.jar
+
+=======
+>>>>>>> Client-Moving

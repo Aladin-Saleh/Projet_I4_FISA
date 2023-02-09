@@ -29,7 +29,7 @@ public class Screen extends JFrame
         this.setResizable(true);
 
 
-        this.gui = new Display(map);
+        this.gui = new Display(map, client);
         this.add(gui);
         
         this.keyHandler = new KeyHandler(map, client, gui);
