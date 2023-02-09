@@ -40,6 +40,8 @@ public class Screen extends JFrame
         this.addKeyListener(keyHandler);
 
         this.setVisible(true);
+
+        
     }
 
 
