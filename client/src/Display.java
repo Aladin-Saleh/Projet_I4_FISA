@@ -1,28 +1,140 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
-import java.io.BufferedReader;
-import java.io.*;
-import java.awt.image.BufferedImage;
+import javax.swing.event.MouseInputAdapter;
+import javax.swing.event.MouseInputListener;
 
-public class Display extends JComponent {
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import  java.awt.event.*;
+
+public class Display extends JComponent{
 
     private Maze map;
     private Client client;
     private int idleFrameX;
     private int idleFrameY;
     private int direction;
-
+    private JLabel button_volume_down;
+    private JLabel button_volume_up;
+    private JLabel button_volume_mute;
     private boolean muted;
 
     public Display(Maze map, Client client)
-
     {
         this.map = map;
         this.client = client;
         this.map.setGUI(this);
         this.setDoubleBuffered(true);
         this.muted = this.client.getMusicHandler().getVolume() > 0f;
+        try
+        {
+            BufferedImage sound_spritesheet = ImageIO.read(new File("res/sound_spritesheet.png"));
+            this.button_volume_down = new JLabel(new ImageIcon(sound_spritesheet.getSubimage(37, 0, 37, 35)));
+            this.button_volume_down.setBounds(755, 820, 37, 35);
+            this.add(button_volume_down);
+            this.button_volume_down.addMouseListener(new MouseInputAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) 
+                {
+                    if(client.getMusicHandler().getVolume() >= 0.1f)
+                    {
+                        client.getMusicHandler().setVolume(client.getMusicHandler().getVolume()-0.1f);
+                    }
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) 
+                {
+                    button_volume_down.setIcon(new ImageIcon(sound_spritesheet.getSubimage(37,35,37, 35)));
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) 
+                {
+                    button_volume_down.setIcon(new ImageIcon(sound_spritesheet.getSubimage(37,0,37, 35)));
+                }
+            });
+
+            this.button_volume_up = new JLabel(new ImageIcon(sound_spritesheet.getSubimage(74, 0, 37, 35)));
+            this.button_volume_up.setBounds(860, 820, 37, 35);
+            this.add(button_volume_up);
+            this.button_volume_up.addMouseListener(new MouseInputAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) 
+                {
+                    if(client.getMusicHandler().getVolume() <1f)
+                    {
+                        client.getMusicHandler().setVolume(client.getMusicHandler().getVolume()+0.1f);
+                    }
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) 
+                {
+                    button_volume_up.setIcon(new ImageIcon(sound_spritesheet.getSubimage(74,35,37, 35)));
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) 
+                {
+                    button_volume_up.setIcon(new ImageIcon(sound_spritesheet.getSubimage(74,0,37, 35)));
+                }
+            });
+
+            this.button_volume_mute = new JLabel(new ImageIcon(sound_spritesheet.getSubimage(0, 0,37,35)));
+            this.button_volume_mute.setBounds(710, 820, 37, 35);
+            this.add(button_volume_mute);
+            this.button_volume_mute.addMouseListener(new MouseInputAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) 
+                {
+                    muted = !muted;
+                    if(muted)
+                    {
+                        client.getMusicHandler().mute();
+                        button_volume_mute.setIcon(new ImageIcon(sound_spritesheet.getSubimage(111,0,37, 35)));
+                    }
+                    else
+                    {
+                        client.getMusicHandler().unmute();
+                        button_volume_mute.setIcon(new ImageIcon(sound_spritesheet.getSubimage(0,0,37, 35)));
+                    }
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) 
+                {
+                    if(muted)
+                    {
+                        button_volume_mute.setIcon(new ImageIcon(sound_spritesheet.getSubimage(111,35,37, 35)));
+                    }
+                    else
+                    {
+                        button_volume_mute.setIcon(new ImageIcon(sound_spritesheet.getSubimage(0,35,37, 35)));
+                    }
+                    
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) 
+                {
+                    if(muted)
+                    {
+                        button_volume_mute.setIcon(new ImageIcon(sound_spritesheet.getSubimage(111,0,37, 35)));
+                    }
+                    else
+                    {
+                        button_volume_mute.setIcon(new ImageIcon(sound_spritesheet.getSubimage(0,0,37, 35)));
+                    }
+                }
+            });
+
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override
@@ -49,13 +161,9 @@ public class Display extends JComponent {
                     p.drawImage(volume_bar.getSubimage(0, 0,48,35),800,820,null);
 
                     BufferedImage sound_spritesheet = ImageIO.read(new File("res/sound_spritesheet.png"));
-                    BufferedImage volume_up = sound_spritesheet.getSubimage(74, 0, 37, 35);
-                    BufferedImage volume_down = sound_spritesheet.getSubimage(37,0, 37, 35);
                     BufferedImage volume_muted = sound_spritesheet.getSubimage(111,0, 37, 35);
                     BufferedImage volume_on = sound_spritesheet.getSubimage(0,0, 37, 35);
 
-                    p.drawImage(volume_down,755,820,null);
-                    p.drawImage(volume_up,855,820,null);
                     if(muted)
                     {
                         p.drawImage(volume_on,710,820,null);

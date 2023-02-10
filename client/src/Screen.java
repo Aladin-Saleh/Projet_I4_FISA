@@ -1,12 +1,17 @@
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
+import javax.swing.event.MouseInputListener;
 
 public class Screen extends JFrame 
 {
-
     private KeyHandler keyHandler;
     private Display gui;
 
@@ -29,14 +34,10 @@ public class Screen extends JFrame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(true);
 
-
         this.gui = new Display(map, client);
         this.add(gui);
-        
         this.keyHandler = new KeyHandler(map, client, gui);
-        
         this.addKeyListener(keyHandler);
-
         this.setVisible(true);
         this.gui.repaint();
         this.repaint();
