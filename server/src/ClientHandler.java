@@ -183,6 +183,7 @@ public class ClientHandler implements Runnable {
                 this.close(this.socket, this.reader, this.writer);
             }
         }
+        
         System.out.println("[ClientHandler] : Client left !");
         close(this.socket, this.reader, this.writer);
 
