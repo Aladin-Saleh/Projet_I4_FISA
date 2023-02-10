@@ -29,7 +29,6 @@ public class RequestHandler
                     this.client.setGameIsOver(true);
                 }
             }
- 
 
             System.out.println("Message received: " + message);
             if (jsonHandler.readJSON(message).get("maze") != null)
@@ -37,13 +36,13 @@ public class RequestHandler
                 int xLength = Integer.parseInt(jsonHandler.readJSON(message).get("maze").toString().split(",")[0], 10);
                 int yLength = Integer.parseInt(jsonHandler.readJSON(message).get("maze").toString().split(",")[1], 10);
                 this.map.setMap(new Cell[xLength][yLength]);
-                
             }
 
             if (jsonHandler.readJSON(message).get("position") != null)
             {
                 int x = Integer.parseInt(jsonHandler.readJSON(message).get("position").toString().split(",")[0], 10);
                 int y = Integer.parseInt(jsonHandler.readJSON(message).get("position").toString().split(",")[1], 10);
+                
                 if (!(this.map.getStartX() == -1) && !(this.map.getStartY() == -1))
                 {
                     this.map.getMap()[this.map.getStartX()][this.map.getStartY()].setIsOccupied(false);
@@ -51,6 +50,7 @@ public class RequestHandler
 
                 this.map.setStartX(x);
                 this.map.setStartY(y);
+                this.map.getMap()[x][y].setIsOccupied(true);
 
                 if (jsonHandler.readJSON(message).get("positionInfoWest") != null)
                 {
@@ -80,11 +80,13 @@ public class RequestHandler
                     this.map.setSouth(isWall);
                 }
 
+                this.map.updateMaze();
+
                 if (jsonHandler.readJSON(message).get("exit") != null)
                 {
                     boolean isExit = Boolean.parseBoolean(jsonHandler.readJSON(message).get("exit").toString());
                     System.out.println("Exit is " + isExit);
-
+                    
                     if (isExit)
                     {
                         Map<String, String> response = new HashMap<String, String>();
@@ -98,19 +100,11 @@ public class RequestHandler
 
                 }
 
-                
                 if (this.map.getGUI() != null)
                 {
                     this.map.getGUI().repaint();
                 }
-
-
-
             }
         }
-    }
-
-
-
-    
+    }    
 }

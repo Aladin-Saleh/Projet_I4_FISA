@@ -16,6 +16,7 @@ public class Client
     private RequestHandler requestHandler;
     private boolean        asWin;
     private boolean        gameIsOver;
+    private MusicHandler   musicHandler;
 
     public Client(Socket socket, Maze map)
     {
@@ -30,6 +31,7 @@ public class Client
             this.bReader        = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.bWriter        = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.readInput      = new BufferedReader(new InputStreamReader(System.in));
+            this.musicHandler   = new MusicHandler("res/music.wav");
         } 
         catch (Exception e)
         {
@@ -105,8 +107,6 @@ public class Client
         }
     }
 
-
-
     public void listen()
     {
         new Thread(
@@ -156,5 +156,10 @@ public class Client
     public boolean getGameIsOver()
     {
         return this.gameIsOver;
+    }
+
+    public MusicHandler getMusicHandler()
+    {
+        return this.musicHandler;
     }
 }

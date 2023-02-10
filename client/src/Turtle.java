@@ -43,9 +43,5 @@ public class Turtle
             System.err.println("Erreur lors de la connexion au serveur");
             e.printStackTrace();
         }
-
-
     }
-    
-
 }
