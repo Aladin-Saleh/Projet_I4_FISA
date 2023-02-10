@@ -33,60 +33,62 @@ public class KeyHandler implements KeyListener
 
             if(this.key == "")
             {
-                this.display.setDirection(1);
-                System.out.println("North wall is open");
-                // Envoi une requete au serveur pour demander les informations de la case
-                if ((this.map.getStartX() - 1) > -1 && this.map.getStartY() > -1)
+                this.key = e.getKeyText(e.getKeyCode());
+                if(e.getKeyChar() == 'z')
                 {
-                    System.out.println("Sending request to server");
-                    position.put("direction", "N");
-                    position.put("position", (this.map.getStartX() - 1) + "," + (this.map.getStartY()));
-                    this.client.sendMessage(this.jsonHandler.writeJSON(position));
+                    this.display.setDirection(1);
+                    System.out.println("North wall is open");
+                    // Envoi une requete au serveur pour demander les informations de la case
+                    if ((this.map.getStartX() - 1) > -1 && this.map.getStartY() > -1)
+                    {
+                        System.out.println("Sending request to server");
+                        position.put("direction", "N");
+                        position.put("position", (this.map.getStartX() - 1) + "," + (this.map.getStartY()));
+                        this.client.sendMessage(this.jsonHandler.writeJSON(position));
+                    }
                 }
-
-            }
-            else if (e.getKeyChar() == 's')
-            {
-                this.display.setDirection(3);
-                System.out.println("South wall is open");
-                // Envoi une requete au serveur pour demander les informations de la case
-                if ((this.map.getStartX() + 1) > -1 && this.map.getStartY() > -1)
+                else if (e.getKeyChar() == 's')
                 {
-                    System.out.println("Sending request to server");
-                    position.put("direction", "S");
-                    position.put("position", (this.map.getStartX() + 1) + "," + (this.map.getStartY()));
-    
-                    this.client.sendMessage(this.jsonHandler.writeJSON(position));
-                }    
-            }
-            else if (e.getKeyChar() == 'd')
-            {
-                this.display.setDirection(2);   
-                System.out.println("East wall is open");
-                if ((this.map.getStartX()) > -1 && (this.map.getStartY() + 1) > -1)
-                {
-                    System.out.println("Sending request to server");
-                    position.put("direction", "E");
-                    position.put("position", (this.map.getStartX()) + "," + (this.map.getStartY() + 1));
-                    this.client.sendMessage(this.jsonHandler.writeJSON(position));
+                    this.display.setDirection(3);
+                    System.out.println("South wall is open");
+                    // Envoi une requete au serveur pour demander les informations de la case
+                    if ((this.map.getStartX() + 1) > -1 && this.map.getStartY() > -1)
+                    {
+                        System.out.println("Sending request to server");
+                        position.put("direction", "S");
+                        position.put("position", (this.map.getStartX() + 1) + "," + (this.map.getStartY()));
+        
+                        this.client.sendMessage(this.jsonHandler.writeJSON(position));
+                    }    
                 }
-                
-            }
-            else if (e.getKeyChar() == 'q')
-            {
-                this.display.setDirection(0);
-                System.out.println("West wall is open");
-                // Envoi une requete au serveur pour demander les informations de la case
-                if ((this.map.getStartX()) > -1 && (this.map.getStartY() - 1) > -1)
+                else if (e.getKeyChar() == 'd')
                 {
-                    System.out.println("Sending request to server");
-                    position.put("direction", "W");
-                    position.put("position", (this.map.getStartX()) + "," + (this.map.getStartY() - 1));
-    
-                    this.client.sendMessage(this.jsonHandler.writeJSON(position));
-                }   
+                    this.display.setDirection(2);   
+                    System.out.println("East wall is open");
+                    if ((this.map.getStartX()) > -1 && (this.map.getStartY() + 1) > -1)
+                    {
+                        System.out.println("Sending request to server");
+                        position.put("direction", "E");
+                        position.put("position", (this.map.getStartX()) + "," + (this.map.getStartY() + 1));
+                        this.client.sendMessage(this.jsonHandler.writeJSON(position));
+                    }
+                    
+                }
+                else if (e.getKeyChar() == 'q')
+                {
+                    this.display.setDirection(0);
+                    System.out.println("West wall is open");
+                    // Envoi une requete au serveur pour demander les informations de la case
+                    if ((this.map.getStartX()) > -1 && (this.map.getStartY() - 1) > -1)
+                    {
+                        System.out.println("Sending request to server");
+                        position.put("direction", "W");
+                        position.put("position", (this.map.getStartX()) + "," + (this.map.getStartY() - 1));
+        
+                        this.client.sendMessage(this.jsonHandler.writeJSON(position));
+                    }   
+                }
             }
-            // this.display.repaint();
         }
     }
 
