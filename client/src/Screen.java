@@ -54,7 +54,7 @@ public class Screen extends JFrame
                 {
                     gui.repaint();
                 }
-            }, 0, 1000, TimeUnit.MILLISECONDS);
+            }, 0, 500, TimeUnit.MILLISECONDS);
     }
 
     public Display getGUI()
