@@ -160,9 +160,4 @@ public class Maze {
     {
         return this.cols;
     }
-
-
-
-
-
 }

@@ -9,7 +9,8 @@ public class Display extends JComponent {
 
     private Maze map;
     private Client client;
-    private int idleFrame;
+    private int idleFrameX;
+    private int idleFrameY;
     private int direction;
 
     public Display(Maze map, Client client)
@@ -44,17 +45,29 @@ public class Display extends JComponent {
                 {
                     BufferedImage directions_spritesheet = ImageIO.read(new File("res/directions.png"));
                     BufferedImage[] directions = {null,null,null,null,null};
+                    
                     for(int i = 0; i< 5; i++)
                     {
                         directions[i] = directions_spritesheet.getSubimage(75*i,0, 75, 75);
                     }
 
                     BufferedImage idleSpriteSheet = ImageIO.read(new File("res/corbeau_spritesheet.png"));
-                    BufferedImage[] idle = {null,null,null,null};
-                    for(int i = 0; i< 4; i++)
+                    BufferedImage player = null;
+
+                    if(this.direction == 0)
                     {
-                        idle[i] = idleSpriteSheet.getSubimage(32*i,0, 32, 32);
-                    }   
+                        this.idleFrameY = 1;
+                        player = idleSpriteSheet.getSubimage(32*this.idleFrameX,idleFrameY*32, 32,32);
+                    } 
+                    else if(this.direction == 2)
+                    {
+                        this.idleFrameY = 0;
+                        player = idleSpriteSheet.getSubimage(32*this.idleFrameX, idleFrameY*32, 32,32);
+                    }
+                    else
+                    {
+                        player = idleSpriteSheet.getSubimage(32*this.idleFrameX, idleFrameY*32, 32, 32);
+                    }
 
                     p.drawImage(directions[this.direction],40,820,null);
                     this.direction = 4;
@@ -67,8 +80,9 @@ public class Display extends JComponent {
         
                             if (this.map.getMap()[i][j].getIsOccupied())
                             {
-                                p.drawImage(idle[idleFrame],j*32, i*32, null);
-                                idleFrame = (idleFrame+1)%4;
+                                p.drawImage(player,j*32, i*32, null);
+                                idleFrameX = (idleFrameX+1)%4;
+                                System.out.println("South: "+this.map.getMap()[i+1][j].getSouthWall());
                             }
         
                             if (this.map.getMap()[i][j].getEastWall())
