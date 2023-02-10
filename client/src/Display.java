@@ -28,7 +28,6 @@ public class Display extends JComponent {
         
         p.setColor(Color.BLACK);
         p.fillRect(0, 0, 960, 960);
-        this.map.updateMaze();
         
         if (!this.client.getGameIsOver())
         {
@@ -82,7 +81,6 @@ public class Display extends JComponent {
                             {
                                 p.drawImage(player,j*32, i*32, null);
                                 idleFrameX = (idleFrameX+1)%4;
-                                System.out.println("South: "+this.map.getMap()[i+1][j].getSouthWall());
                             }
         
                             if (this.map.getMap()[i][j].getEastWall())

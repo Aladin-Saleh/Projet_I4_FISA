@@ -36,14 +36,14 @@ public class KeyHandler implements KeyListener
                 if ((this.map.getStartX() - 1) > -1 && this.map.getStartY() > -1)
                 {
                     System.out.println("Sending request to server");
-                    if (!this.map.getMap()[this.map.getStartX() - 1][this.map.getStartY()].getIsKnown())
-                    {
-                        this.map.getMap()[this.map.getStartX() - 1][this.map.getStartY()].setEastWall(false);
-                        this.map.getMap()[this.map.getStartX() - 1][this.map.getStartY()].setWestWall(false);
-                        this.map.getMap()[this.map.getStartX() - 1][this.map.getStartY()].setNorthWall(false);
-                        this.map.getMap()[this.map.getStartX() - 1][this.map.getStartY()].setSouthWall(false);
+                    // if (!this.map.getMap()[this.map.getStartX() - 1][this.map.getStartY()].getIsKnown())
+                    // {
+                    //     // this.map.getMap()[this.map.getStartX() - 1][this.map.getStartY()].setEastWall(false);
+                    //     // this.map.getMap()[this.map.getStartX() - 1][this.map.getStartY()].setWestWall(false);
+                    //     // this.map.getMap()[this.map.getStartX() - 1][this.map.getStartY()].setNorthWall(false);
+                    //     // this.map.getMap()[this.map.getStartX() - 1][this.map.getStartY()].setSouthWall(false);
                     
-                    }
+                    // }
                     
     
                     position.put("direction", "N");
@@ -60,14 +60,14 @@ public class KeyHandler implements KeyListener
                 if ((this.map.getStartX() + 1) > -1 && this.map.getStartY() > -1)
                 {
                     System.out.println("Sending request to server");
-                    if (!this.map.getMap()[this.map.getStartX() + 1][this.map.getStartY()].getIsKnown())
-                    {
-                        this.map.getMap()[this.map.getStartX() + 1][this.map.getStartY()].setEastWall(false);
-                        this.map.getMap()[this.map.getStartX() + 1][this.map.getStartY()].setWestWall(false);
-                        this.map.getMap()[this.map.getStartX() + 1][this.map.getStartY()].setNorthWall(false);
-                        this.map.getMap()[this.map.getStartX() + 1][this.map.getStartY()].setSouthWall(false);      
+                    // if (!this.map.getMap()[this.map.getStartX() + 1][this.map.getStartY()].getIsKnown())
+                    // {
+                    //     // this.map.getMap()[this.map.getStartX() + 1][this.map.getStartY()].setEastWall(false);
+                    //     // this.map.getMap()[this.map.getStartX() + 1][this.map.getStartY()].setWestWall(false);
+                    //     // this.map.getMap()[this.map.getStartX() + 1][this.map.getStartY()].setNorthWall(false);
+                    //     // this.map.getMap()[this.map.getStartX() + 1][this.map.getStartY()].setSouthWall(false);      
     
-                    }
+                    // }
                     
     
                     // Map<String, String> position = new HashMap<String, String>();
@@ -86,14 +86,14 @@ public class KeyHandler implements KeyListener
                 {
                     System.out.println("Sending request to server");
                     // Envoi une requete au serveur pour demander les informations de la case
-                    if (!this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].getIsKnown())
-                    {
-                        this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setEastWall(false);
-                        this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setWestWall(false);
-                        this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setNorthWall(false);
-                        this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setSouthWall(false);
+                    // if (!this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].getIsKnown())
+                    // {
+                    //     // this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setEastWall(false);
+                    //     // this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setWestWall(false);
+                    //     // this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setNorthWall(false);
+                    //     // this.map.getMap()[this.map.getStartX()][this.map.getStartY() + 1].setSouthWall(false);
 
-                    }
+                    // }
 
                     // Map<String, String> position = new HashMap<String, String>();
                     position.put("direction", "E");
@@ -110,14 +110,14 @@ public class KeyHandler implements KeyListener
                 if ((this.map.getStartX()) > -1 && (this.map.getStartY() - 1) > -1)
                 {
                     System.out.println("Sending request to server");
-                    if (!this.map.getMap()[this.map.getStartX()][this.map.getStartY() - 1].getIsKnown())
-                    {
-                        this.map.getMap()[this.map.getStartX()][this.map.getStartY() - 1].setEastWall(false);
-                        this.map.getMap()[this.map.getStartX()][this.map.getStartY() - 1].setWestWall(false);
-                        this.map.getMap()[this.map.getStartX()][this.map.getStartY() - 1].setNorthWall(false);
-                        this.map.getMap()[this.map.getStartX()][this.map.getStartY() - 1].setSouthWall(false);
+                    // if (!this.map.getMap()[this.map.getStartX()][this.map.getStartY() - 1].getIsKnown())
+                    // {
+                    //     // this.map.getMap()[this.map.getStartX()][this.map.getStartY() - 1].setEastWall(false);
+                    //     // this.map.getMap()[this.map.getStartX()][this.map.getStartY() - 1].setWestWall(false);
+                    //     // this.map.getMap()[this.map.getStartX()][this.map.getStartY() - 1].setNorthWall(false);
+                    //     // this.map.getMap()[this.map.getStartX()][this.map.getStartY() - 1].setSouthWall(false);
     
-                    }
+                    // }
                     
                     // Map<String, String> position = new HashMap<String, String>();
                     // position.put("position", (this.map.getStartX() - 1) + "," + this.map.getStartY());
@@ -138,7 +138,6 @@ public class KeyHandler implements KeyListener
     @Override
     public void keyReleased(KeyEvent e) {
         // TODO Auto-generated method stub
-        
     }
     
 }

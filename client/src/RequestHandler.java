@@ -50,6 +50,7 @@ public class RequestHandler
 
                 this.map.setStartX(x);
                 this.map.setStartY(y);
+                this.map.getMap()[x][y].setIsOccupied(true);
 
                 if (jsonHandler.readJSON(message).get("positionInfoWest") != null)
                 {
@@ -78,6 +79,8 @@ public class RequestHandler
                     System.out.println("South is " + isWall);
                     this.map.setSouth(isWall);
                 }
+
+                this.map.updateMaze();
 
                 if (jsonHandler.readJSON(message).get("exit") != null)
                 {
