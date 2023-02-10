@@ -16,6 +16,7 @@ public class MusicHandler {
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundPath).getAbsoluteFile());
             this.clip = AudioSystem.getClip();
             this.clip.open(audioInputStream);
+            this.setVolume(0.1f);
             this.clip.loop(this.clip.LOOP_CONTINUOUSLY);
             this.clip.start(); //start to play the clip
             this.volume = this.getVolume();  

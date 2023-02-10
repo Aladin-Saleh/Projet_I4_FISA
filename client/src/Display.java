@@ -13,6 +13,8 @@ public class Display extends JComponent {
     private int idleFrameY;
     private int direction;
 
+    private boolean muted;
+
     public Display(Maze map, Client client)
 
     {
@@ -20,6 +22,7 @@ public class Display extends JComponent {
         this.client = client;
         this.map.setGUI(this);
         this.setDoubleBuffered(true);
+        this.muted = this.client.getMusicHandler().getVolume() > 0f;
     }
 
     @Override
@@ -42,6 +45,31 @@ public class Display extends JComponent {
             {
                 try
                 {
+                    BufferedImage volume_bar = ImageIO.read(new File("res/volume_bar.png"));
+                    p.drawImage(volume_bar.getSubimage(0, 0,48,35),800,820,null);
+
+                    BufferedImage sound_spritesheet = ImageIO.read(new File("res/sound_spritesheet.png"));
+                    BufferedImage volume_up = sound_spritesheet.getSubimage(74, 0, 37, 35);
+                    BufferedImage volume_down = sound_spritesheet.getSubimage(37,0, 37, 35);
+                    BufferedImage volume_muted = sound_spritesheet.getSubimage(111,0, 37, 35);
+                    BufferedImage volume_on = sound_spritesheet.getSubimage(0,0, 37, 35);
+
+                    p.drawImage(volume_down,755,820,null);
+                    p.drawImage(volume_up,855,820,null);
+                    if(muted)
+                    {
+                        p.drawImage(volume_on,710,820,null);
+                    }
+                    else
+                    {
+                        p.drawImage(volume_muted,710,820,null);
+                    }
+
+                    for(int i = 0;i<(int)(this.client.getMusicHandler().getVolume()*10);i++)
+                    {
+                        p.drawImage(volume_bar.getSubimage(48, 0, 2, 35),805+(i*4),820,null);
+                    }
+
                     BufferedImage directions_spritesheet = ImageIO.read(new File("res/directions.png"));
                     BufferedImage[] directions = {null,null,null,null,null};
                     
@@ -111,7 +139,7 @@ public class Display extends JComponent {
                 }
                 catch(Exception e)
                 {
-
+                    System.out.println(e.getMessage());
                 }
             }
         }

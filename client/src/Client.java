@@ -107,8 +107,6 @@ public class Client
         }
     }
 
-
-
     public void listen()
     {
         new Thread(
@@ -158,5 +156,10 @@ public class Client
     public boolean getGameIsOver()
     {
         return this.gameIsOver;
+    }
+
+    public MusicHandler getMusicHandler()
+    {
+        return this.musicHandler;
     }
 }
