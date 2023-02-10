@@ -56,12 +56,27 @@ public class RequestHandler
                 this.maze.getMap()[x][y].setOccupied(true);
 
                 response.put("exit", this.maze.getMap()[x][y].isExit()+"");
+                response.put("teleport", this.maze.getMap()[x][y].isTransporter()+"");
     
-                response.put("position", x + "," + y);
-                response.put("positionInfoEast", this.maze.getMap()[x][y].getEastWall()+"");
-                response.put("positionInfoWest", this.maze.getMap()[x][y].getWestWall()+"");
-                response.put("positionInfoNorth", this.maze.getMap()[x][y].getNorthWall()+"");
-                response.put("positionInfoSouth", this.maze.getMap()[x][y].getSouthWall()+"");
+
+                if (this.maze.getMap()[x][y].isTransporter())
+                {
+                    int[] position = this.maze.getFreeCell();
+                    response.put("position", position[0] + "," + position[1]);
+                    response.put("positionInfoEast", this.maze.getMap()[position[0]][position[1]].getEastWall()+"");
+                    response.put("positionInfoWest", this.maze.getMap()[position[0]][position[1]].getWestWall()+"");
+                    response.put("positionInfoNorth", this.maze.getMap()[position[0]][position[1]].getNorthWall()+"");
+                    response.put("positionInfoSouth", this.maze.getMap()[position[0]][position[1]].getSouthWall()+"");
+                }
+                else
+                {
+                    response.put("position", x + "," + y);
+                    response.put("positionInfoEast", this.maze.getMap()[x][y].getEastWall()+"");
+                    response.put("positionInfoWest", this.maze.getMap()[x][y].getWestWall()+"");
+                    response.put("positionInfoNorth", this.maze.getMap()[x][y].getNorthWall()+"");
+                    response.put("positionInfoSouth", this.maze.getMap()[x][y].getSouthWall()+"");
+                }
+
     
             }
             else
