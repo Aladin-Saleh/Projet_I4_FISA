@@ -69,6 +69,9 @@ run_gamezone:
 	echo "Gamezone running..."
 	$(java) $(SERVER_RUN_OPTION) GameZone
 
+run_menu:
+	echo "Menu running..."
+	$(java) $(CLIENT_RUN_OPTION) MainMenu
 
 clean:
 	echo "Cleaning all repository..."

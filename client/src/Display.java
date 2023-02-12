@@ -5,9 +5,10 @@ import javax.swing.event.MouseInputAdapter;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import  java.awt.event.*;
+import java.awt.event.*;
 
-public class Display extends JComponent{
+public class Display extends JComponent
+{
 
     private Maze map;
     private Client client;

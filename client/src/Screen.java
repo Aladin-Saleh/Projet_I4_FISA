@@ -9,16 +9,32 @@ public class Screen extends JFrame
     private KeyHandler keyHandler;
     private Display gui;
 
+    // public Screen()
+    // {
+    //     this.setTitle("Turtle");
+    //     this.setSize(300,300);
+    //     this.setLocationRelativeTo(null);
+    //     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    //     this.setResizable(true);
+
+    //     this.setVisible(true);
+    // }
+
+    // Constructeur de la fenêtre de jeu (menu principal)
     public Screen()
     {
-        this.setTitle("Turtle");
-        this.setSize(300,300);
+        this.setTitle("Turtle Game Menu");
+        this.setSize(500,500);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(true);
 
+        MenuDisplay menu = new MenuDisplay();
+        this.add(menu);
+        this.addMouseListener(menu);
         this.setVisible(true);
     }
+
 
     public Screen(Maze map, Client client)
     {   

@@ -31,7 +31,14 @@ public class Client
             this.bReader        = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.bWriter        = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.readInput      = new BufferedReader(new InputStreamReader(System.in));
-            this.musicHandler   = new MusicHandler("res/music.wav");
+            // Get absolute path of the music file.
+            // /mnt/c/Users/aladi/Repertoire_de_travaille/Projet_I4_FISA/client/build/res/music.wav 
+
+
+            String path = System.getProperty("user.dir");
+            System.out.println(path + "/client/build/res/music.wav");
+            this.musicHandler   = new MusicHandler(path + "/client/build/res/music.wav");
+            // this.musicHandler   = new MusicHandler("res/music.wav");
         } 
         catch (Exception e)
         {
