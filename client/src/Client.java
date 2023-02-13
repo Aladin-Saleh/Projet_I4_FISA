@@ -22,6 +22,9 @@ public class Client
     {
         try
         {
+            
+            Turtle.successLogs.write("Connexion au serveur réussie");
+            
             this.asWin          = false;
             this.gameIsOver     = false;
             this.map            = map;
@@ -38,6 +41,7 @@ public class Client
             String path = System.getProperty("user.dir");
             System.out.println(path + "/client/build/res/music.wav");
             this.musicHandler   = new MusicHandler(path + "/res/music.wav");
+
             // this.musicHandler   = new MusicHandler("res/music.wav");
         } 
         catch (Exception e)
@@ -51,6 +55,7 @@ public class Client
     {
         try
         {
+            Turtle.successLogs.write("Fermeture de la connexion");
             if (socket != null)
             {
                 socket.close();
@@ -86,11 +91,13 @@ public class Client
                 bWriter.write("("+this.socket.getInetAddress()+") : " + msgSend);
                 bWriter.newLine();
                 bWriter.flush();
+                Turtle.successLogs.write("Envoi de : " + msgSend);
             }
         }
         catch (IOException err) 
         {
             err.printStackTrace();
+            Turtle.errorLogs.write("Erreur lors de l'envoi du message");
             close(this.socket,this.bReader,this.bWriter);
         }
     }
@@ -105,17 +112,21 @@ public class Client
                 bWriter.newLine();
                 bWriter.flush();
                 System.out.println("Envoi de : " + message );
+                Turtle.successLogs.write("Envoi de : " + message);
             }
         }
         catch (IOException err) 
         {
             err.printStackTrace();
+            Turtle.errorLogs.write("Erreur lors de l'envoi du message");
             close(this.socket,this.bReader,this.bWriter);
         }
     }
 
     public void listen()
     {
+        Turtle.successLogs.write("Ecoute du serveur");
+        Turtle.successLogs.write("Thread lancé");
         new Thread(
             new Runnable(){
 

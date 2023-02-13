@@ -122,6 +122,7 @@ public class Maze {
     {
         this.map = map;
         System.out.println("New map setted" + this.map.length + "x" + this.map[0].length);
+        Turtle.successLogs.write("New map setted" + this.map.length + "x" + this.map[0].length);
         for (int i = 0; i < this.map.length; i++)
         {
             for (int j = 0; j < this.map[0].length; j++)

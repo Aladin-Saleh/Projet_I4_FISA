@@ -13,6 +13,7 @@ public class KeyHandler implements KeyListener
 
     public KeyHandler(Maze map, Client client, Display display)
     {
+        Turtle.successLogs.write("KeyHandler created");
         this.map = map;
         this.client = client;
         this.display = display;

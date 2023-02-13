@@ -47,6 +47,7 @@ public class Display extends JComponent
                 public void mouseEntered(MouseEvent e) 
                 {
                     button_volume_down.setIcon(new ImageIcon(sound_spritesheet.getSubimage(37,35,37, 35)));
+
                 }
 
                 @Override
@@ -157,9 +158,11 @@ public class Display extends JComponent
             {
                 try
                 {
+                    Turtle.successLogs.write("Chargement des sprites de la map (volume bar)...");
                     BufferedImage volume_bar = ImageIO.read(new File("res/volume_bar.png"));
                     p.drawImage(volume_bar.getSubimage(0, 0,48,35),800,820,null);
 
+                    Turtle.successLogs.write("Chargement des sprites de la map (sound)...");
                     BufferedImage sound_spritesheet = ImageIO.read(new File("res/sound_spritesheet.png"));
                     BufferedImage volume_muted = sound_spritesheet.getSubimage(111,0, 37, 35);
                     BufferedImage volume_on = sound_spritesheet.getSubimage(0,0, 37, 35);
@@ -178,6 +181,7 @@ public class Display extends JComponent
                         p.drawImage(volume_bar.getSubimage(48, 0, 2, 35),805+(i*4),820,null);
                     }
 
+                    Turtle.successLogs.write("Chargement des sprites de la map...");
                     BufferedImage directions_spritesheet = ImageIO.read(new File("res/directions.png"));
                     BufferedImage[] directions = {null,null,null,null,null};
                     
@@ -186,6 +190,7 @@ public class Display extends JComponent
                         directions[i] = directions_spritesheet.getSubimage(75*i,0, 75, 75);
                     }
 
+                    Turtle.successLogs.write("Chargement des sprites du joueur...");
                     BufferedImage idleSpriteSheet = ImageIO.read(new File("res/corbeau_spritesheet.png"));
                     BufferedImage player = null;
 
@@ -208,6 +213,7 @@ public class Display extends JComponent
                     this.direction = 4;
 
                     // draw map
+                    Turtle.successLogs.write("Drawing map...");
                     for (int i = 0; i < this.map.getMap().length; i++)
                     {
                         for (int j = 0; j < this.map.getMap()[0].length; j++)
@@ -248,6 +254,7 @@ public class Display extends JComponent
                 catch(Exception e)
                 {
                     System.out.println(e.getMessage());
+                    Turtle.errorLogs.write(e.getMessage());
                 }
             }
         }

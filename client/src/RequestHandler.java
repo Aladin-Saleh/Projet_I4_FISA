@@ -31,6 +31,7 @@ public class RequestHandler
             }
 
             System.out.println("Message received: " + message);
+            Turtle.successLogs.write("Message received: " + message);
             if (jsonHandler.readJSON(message).get("maze") != null)
             {
                 int xLength = Integer.parseInt(jsonHandler.readJSON(message).get("maze").toString().split(",")[0], 10);
@@ -40,6 +41,7 @@ public class RequestHandler
 
             if (jsonHandler.readJSON(message).get("position") != null)
             {
+                
                 int x = Integer.parseInt(jsonHandler.readJSON(message).get("position").toString().split(",")[0], 10);
                 int y = Integer.parseInt(jsonHandler.readJSON(message).get("position").toString().split(",")[1], 10);
                 

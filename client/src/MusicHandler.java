@@ -13,6 +13,7 @@ public class MusicHandler {
     {
         try
         {
+            Turtle.successLogs.write("Lecture du fichier audio");
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundPath).getAbsoluteFile());
             this.clip = AudioSystem.getClip();
             this.clip.open(audioInputStream);
@@ -24,6 +25,7 @@ public class MusicHandler {
         } 
         catch (Exception e) 
         {
+            Turtle.errorLogs.write("Erreur lors de la lecture du fichier audio");
             System.out.println(e.getMessage());
         }
     }
@@ -58,6 +60,7 @@ public class MusicHandler {
     public void setVolume(float volume) {
         if (volume < 0f || volume > 1f)
         {
+            Turtle.errorLogs.write("Volume invalide: " + volume);
             throw new IllegalArgumentException("Volume invalide: " + volume);
         }
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);        

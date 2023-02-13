@@ -4,6 +4,7 @@ import java.net.Socket;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+
 public class Turtle 
 {    
     // Constante de direction
@@ -12,20 +13,25 @@ public class Turtle
     public static final String EAST     = "E";
     public static final String WEST     = "W";
 
+    public static LogsHandler errorLogs;  
+    public static LogsHandler successLogs;
 
     private Maze   map;
     private int     x;
     private int     y;
 
-    private Socket  socket;
-    private Screen  screen;
-    private KeyHandler keyHandler;
+    private Socket      socket;
+    private Screen      screen;
+    private KeyHandler  keyHandler;
+
 
 
     public Turtle(int port)
     {
         try 
         {
+            errorLogs   = new LogsHandler("./logs/","error_logs_synchro_extrabat.log");
+            successLogs = new LogsHandler("./logs/","success_logs_synchro_extrabat.log");
 
             this.map = new Maze();
             this.socket = new Socket(InetAddress.getLocalHost(),port);
@@ -39,7 +45,8 @@ public class Turtle
             client.sendMessage();
         } 
         catch (IOException e)
-        {
+        {   
+            this.errorLogs.write("Erreur lors de la connexion au serveur");
             System.err.println("Erreur lors de la connexion au serveur");
             e.printStackTrace();
         }
