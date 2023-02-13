@@ -27,3 +27,4 @@ hs_err_pid*
 # Executable .jar
 server/build/Main.jar
 client/build/Main.jar
+client/build/MainMenu.jar
