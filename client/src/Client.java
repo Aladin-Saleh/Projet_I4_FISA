@@ -37,7 +37,7 @@ public class Client
 
             String path = System.getProperty("user.dir");
             System.out.println(path + "/client/build/res/music.wav");
-            this.musicHandler   = new MusicHandler(path + "/client/build/res/music.wav");
+            this.musicHandler   = new MusicHandler(path + "/res/music.wav");
             // this.musicHandler   = new MusicHandler("res/music.wav");
         } 
         catch (Exception e)
