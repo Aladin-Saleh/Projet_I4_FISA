@@ -166,6 +166,8 @@ public class Display extends JComponent {
                     p.drawImage(directions[this.direction], 40, 820, null);
                     this.direction = 4;
 
+                    
+
                     // draw map
                     for (int i = 0; i < this.map.getMap().length; i++) {
                         for (int j = 0; j < this.map.getMap()[0].length; j++) {
@@ -173,6 +175,12 @@ public class Display extends JComponent {
                             if (this.map.getMap()[i][j].getIsOccupied()) {
                                 p.drawImage(player, j * 32, i * 32, null);
                                 idleFrameX = (idleFrameX + 1) % 4;
+                            }
+
+                            if (this.map.getMap()[i][j].getIsTransporter()) 
+                            {
+                                p.setColor(Color.WHITE);
+                                p.drawOval(j * 32, i * 32, 32, 32);
                             }
 
                             if (this.map.getMap()[i][j].getEastWall()) {

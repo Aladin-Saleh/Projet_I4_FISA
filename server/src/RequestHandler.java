@@ -103,6 +103,8 @@ public class RequestHandler
                 if (this.maze.getMap()[x][y].isTransporter())
                 {
                     int[] position = this.maze.getFreeCell();
+                    // Send the transporter position to the client
+                    response.put("teleportPosition", x + "," + y);
                     response.put("position", position[0] + "," + position[1]);
                     response.put("positionInfoEast", this.maze.getMap()[position[0]][position[1]].getEastWall()+"");
                     response.put("positionInfoWest", this.maze.getMap()[position[0]][position[1]].getWestWall()+"");

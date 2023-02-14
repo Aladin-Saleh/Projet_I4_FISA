@@ -94,6 +94,15 @@ public class RequestHandler {
 
                 }
 
+                if (jsonHandler.readJSON(message).get("teleportPosition") != null)
+                {
+                    int xTeleport = Integer.parseInt(jsonHandler.readJSON(message).get("teleportPosition").toString().split(",")[0], 10);
+                    int yTeleport = Integer.parseInt(jsonHandler.readJSON(message).get("teleportPosition").toString().split(",")[1], 10);
+
+                    this.map.getMap()[xTeleport][yTeleport].setIsTransporter(true);
+
+                }
+
                 
 
                 this.map.updateMaze();
