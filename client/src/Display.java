@@ -21,7 +21,6 @@ public class Display extends JComponent {
     private JLabel button_volume_up;
     private JLabel button_volume_mute;
     private boolean muted;
-    private boolean isBonusActive;
 
     //Chargement des images
     private BufferedImage tp;
@@ -30,6 +29,7 @@ public class Display extends JComponent {
     private BufferedImage volume_bar;
     private BufferedImage[] directions = {null,null,null,null,null};
     private BufferedImage[][] idle_spritesheet = new BufferedImage[2][4];
+    private BufferedImage bonus_pickaxe;
 
     private ImageIcon mute;
     private ImageIcon mute_hover;
@@ -45,12 +45,12 @@ public class Display extends JComponent {
         this.client = client;
         this.map.setGUI(this);
         this.setDoubleBuffered(true);
-        this.muted = this.client.getMusicHandler().getVolume() > 0f;
-        this.isBonusActive = false;
+        this.muted = false;
         try
         {
             this.sound_spritesheet                  = ImageIO.read(new File("res/sound_spritesheet.png"));
             this.tp                                 = ImageIO.read(new File("res/pentacle.png"));
+            this.bonus_pickaxe                      = ImageIO.read(new File("res/pickaxe.png"));
             this.mute                               = new ImageIcon(sound_spritesheet.getSubimage(0,0,37, 35));
             this.mute_hover                         = new ImageIcon(sound_spritesheet.getSubimage(0,35,37, 35));
             this.on                                 = new ImageIcon(sound_spritesheet.getSubimage(111,0,37, 35));
@@ -109,6 +109,18 @@ public class Display extends JComponent {
                 {
                     p.drawImage(this.volume,800,820,null);
 
+                    if(this.client.getIsBonusActive())
+                    {
+                        p.drawImage(bonus_pickaxe,428,820,null);
+                        p.setColor(Color.white);
+                        p.drawString("Pioche : vous permet de casser un mur", 345, 910);
+                    }
+                    else
+                    {
+                        p.setColor(Color.BLACK);
+                        p.fillRect(428, 820, 64, 64);
+                    }
+
                     for(int i = 0;i<(int)(this.client.getMusicHandler().getVolume()*10);i++)
                     {
                         p.drawImage(this.volume_bar,804+(i*4),820,null);
@@ -123,7 +135,7 @@ public class Display extends JComponent {
                         this.idleFrameY = 0;
                     }
 
-                    BufferedImage player = this.idle_spritesheet[this.idleFrameY][this.idleFrameX];;
+                    BufferedImage player = this.idle_spritesheet[this.idleFrameY][this.idleFrameX];
 
                     p.drawImage(this.directions[this.direction],40,820,null);
                     this.direction = 4;
@@ -141,12 +153,6 @@ public class Display extends JComponent {
                             {
                                 p.drawImage(player,j*32, i*32, null);
                                 this.idleFrameX = (this.idleFrameX+1)%4;
-                            }
-
-                            if (this.map.getMap()[i][j].getIsTransporter()) 
-                            {
-                                p.setColor(Color.WHITE);
-                                p.drawOval(j * 32, i * 32, 32, 32);
                             }
 
                             if (this.map.getMap()[i][j].getEastWall()) {
@@ -171,7 +177,7 @@ public class Display extends JComponent {
 
                             if(this.map.getMap()[i][j].getIsTransporter())
                             {
-                                p.drawImage(this.tp,j*32,i*32,null);
+                                p.drawImage(this.tp,j*32,i*32,32,32,null);
                             }
                         }
                     }
@@ -194,7 +200,7 @@ public class Display extends JComponent {
 
     public void InitButtonMute()
     {
-        this.button_volume_mute = new JLabel(mute);
+        this.button_volume_mute = new JLabel(on);
         this.button_volume_mute.setBounds(710, 820, 37, 35);
         this.add(button_volume_mute);
         this.button_volume_mute.addMouseListener(new MouseInputAdapter() {
@@ -299,10 +305,5 @@ public class Display extends JComponent {
                 button_volume_down.setIcon(down);
             }
         });
-    }
-
-    public void setIsBonusActive(boolean isBonusActive)
-    {
-        this.isBonusActive = isBonusActive;
     }
 }

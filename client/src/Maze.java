@@ -54,7 +54,6 @@ public class Maze {
             if (this.west) { this.map[startX][startY].setWestWall(west); }
             if (this.north) { this.map[startX][startY].setNorthWall(north); }
             if (this.south) { this.map[startX][startY].setSouthWall(south); }
-
         }
     }
 

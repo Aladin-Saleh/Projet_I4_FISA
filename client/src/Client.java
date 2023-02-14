@@ -17,6 +17,7 @@ public class Client {
     private boolean gameIsOver;
     private MusicHandler musicHandler;
     private int bonus;
+    private boolean isBonusActive;
 
     public Client(Socket socket, Maze map) {
         try 
@@ -32,6 +33,7 @@ public class Client {
             this.readInput = new BufferedReader(new InputStreamReader(System.in));
             this.musicHandler = new MusicHandler("res/music.wav");
             this.bonus = 0;
+            this.isBonusActive = false;
         } 
         catch (Exception e)
         {
@@ -138,5 +140,13 @@ public class Client {
 
     public int getBonus() {
         return this.bonus;
+    }
+
+    public void setIsBonusActive(boolean isBonusActive){
+        this.isBonusActive = isBonusActive;
+    }
+
+    public boolean getIsBonusActive(){
+        return this.isBonusActive;
     }
 }
