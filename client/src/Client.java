@@ -162,4 +162,9 @@ public class Client
     {
         return this.musicHandler;
     }
+
+    public void setIsBonusActive()
+    {
+        this.display.setIsBonusActive(true);
+    }
 }

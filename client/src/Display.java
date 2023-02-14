@@ -3,6 +3,8 @@ import javax.security.auth.PrivateCredentialPermission;
 import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 
+import com.fasterxml.jackson.databind.node.BooleanNode;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -19,6 +21,7 @@ public class Display extends JComponent{
     private JLabel button_volume_up;
     private JLabel button_volume_mute;
     private boolean muted;
+    private boolean isBonusActive;
 
     //Chargement des images
     private BufferedImage tp;
@@ -44,6 +47,7 @@ public class Display extends JComponent{
         this.map.setGUI(this);
         this.setDoubleBuffered(true);
         this.muted = this.client.getMusicHandler().getVolume() > 0f;
+        this.isBonusActive = false;
         try
         {
             this.sound_spritesheet                  = ImageIO.read(new File("res/sound_spritesheet.png"));
@@ -300,5 +304,10 @@ public class Display extends JComponent{
                 button_volume_down.setIcon(down);
             }
         });
+    }
+
+    public void setIsBonusActive(boolean isBonusActive)
+    {
+        this.isBonusActive = isBonusActive;
     }
 }
