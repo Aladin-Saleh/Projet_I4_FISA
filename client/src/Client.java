@@ -42,6 +42,10 @@ public class Client {
 
     public void close(Socket socket, BufferedReader bR, BufferedWriter bW) {
         try {
+
+
+            this.sendMessage("{close:" + this.map.getStartX() + "," + this.map.getStartY() + "}");
+            System.out.println("Fermeture de la connexion");
             if (socket != null) {
                 socket.close();
             }
