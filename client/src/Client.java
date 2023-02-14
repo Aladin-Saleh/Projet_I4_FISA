@@ -5,33 +5,33 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-public class Client
-{
+public class Client {
     private BufferedReader bReader;
     private BufferedWriter bWriter;
     private BufferedReader readInput;
-    private Socket         socket;
-    private JSONHandler    jsonHandler;
-    private Maze           map;
+    private Socket socket;
+    private JSONHandler jsonHandler;
+    private Maze map;
     private RequestHandler requestHandler;
-    private boolean        asWin;
-    private boolean        gameIsOver;
-    private MusicHandler   musicHandler;
+    private boolean isWin;
+    private boolean gameIsOver;
+    private MusicHandler musicHandler;
+    private int bonus;
 
-    public Client(Socket socket, Maze map)
-    {
-        try
+    public Client(Socket socket, Maze map) {
+        try 
         {
-            this.asWin          = false;
-            this.gameIsOver     = false;
-            this.map            = map;
+            this.isWin = false;
+            this.gameIsOver = false;
+            this.map = map;
             this.requestHandler = new RequestHandler(this.map, this);
-            this.jsonHandler    = new JSONHandler();
-            this.socket         = socket;
-            this.bReader        = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            this.bWriter        = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            this.readInput      = new BufferedReader(new InputStreamReader(System.in));
-            this.musicHandler   = new MusicHandler("res/music.wav");
+            this.jsonHandler = new JSONHandler();
+            this.socket = socket;
+            this.bReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            this.bWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            this.readInput = new BufferedReader(new InputStreamReader(System.in));
+            this.musicHandler = new MusicHandler("res/music.wav");
+            this.bonus = 0;
         } 
         catch (Exception e)
         {
@@ -40,131 +40,103 @@ public class Client
         }
     }
 
-    public void close(Socket socket,BufferedReader bR,BufferedWriter bW)
-    {
-        try
-        {
-            if (socket != null)
-            {
+    public void close(Socket socket, BufferedReader bR, BufferedWriter bW) {
+        try {
+            if (socket != null) {
                 socket.close();
             }
-            if (bR != null)
-            {
+            if (bR != null) {
                 bR.close();
             }
-            if (bW != null)
-            {
+            if (bW != null) {
                 bW.close();
             }
-            if (readInput != null)
-            {
+            if (readInput != null) {
                 readInput.close();
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("[Client]: " + e.getMessage());
         }
     }
 
-    public void sendMessage()
-    {
-        try 
-        {
-            //Ecoute de l'entrée de client.
-            //Scanner sc = new Scanner(System.in);
-            while(this.socket.isConnected())
-            {
+    public void sendMessage() {
+        try {
+            // Ecoute de l'entrée de client.
+            // Scanner sc = new Scanner(System.in);
+            while (this.socket.isConnected()) {
                 String msgSend = this.readInput.readLine();
-                bWriter.write("("+this.socket.getInetAddress()+") : " + msgSend);
+                bWriter.write("(" + this.socket.getInetAddress() + ") : " + msgSend);
                 bWriter.newLine();
                 bWriter.flush();
             }
-        }
-        catch (IOException err) 
-        {
+        } catch (IOException err) {
             err.printStackTrace();
-            close(this.socket,this.bReader,this.bWriter);
+            close(this.socket, this.bReader, this.bWriter);
         }
     }
 
-    public void sendMessage(String message)
-    {
-        try 
-        {
-            if (this.socket.isConnected())
-            {
+    public void sendMessage(String message) {
+        try {
+            if (this.socket.isConnected()) {
                 bWriter.write(message);
                 bWriter.newLine();
                 bWriter.flush();
-                System.out.println("Envoi de : " + message );
+                System.out.println("Envoi de : " + message);
             }
-        }
-        catch (IOException err) 
-        {
+        } catch (IOException err) {
             err.printStackTrace();
-            close(this.socket,this.bReader,this.bWriter);
+            close(this.socket, this.bReader, this.bWriter);
         }
     }
 
-    public void listen()
-    {
+    public void listen() {
         new Thread(
-            new Runnable(){
+                new Runnable() {
 
-                @Override
-                public void run()
-                {
-                    String message;
-                    while (socket.isConnected())
-                    {
-                        try
-                        {
-                            message = bReader.readLine();
-                            if (message != null)
-                            {
-                                requestHandler.handleRequest(message);
+                    @Override
+                    public void run() {
+                        String message;
+                        while (socket.isConnected()) {
+                            try {
+                                message = bReader.readLine();
+                                if (message != null) {
+                                    requestHandler.handleRequest(message);
+                                }
+                            } catch (Exception e) {
+                                System.out.println("[Client]: " + e.getMessage());
+                                e.printStackTrace();
+                                close(socket, bReader, bWriter);
                             }
                         }
-                        catch (Exception e)
-                        {
-                            System.out.println("[Client]: " + e.getMessage());
-                            e.printStackTrace();
-                            close(socket, bReader, bWriter);
-                        }
                     }
-                }
-            }
-        ).start();
+                }).start();
     }
 
-    public void setAsWin(boolean asWin)
-    {
-        this.asWin = asWin;
+    public void setisWin(boolean isWin) {
+        this.isWin = isWin;
     }
 
-    public boolean getAsWin()
-    {
-        return this.asWin;
+    public boolean getisWin() {
+        return this.isWin;
     }
 
-    public void setGameIsOver(boolean gameIsOver)
-    {
+    public void setGameIsOver(boolean gameIsOver) {
         this.gameIsOver = gameIsOver;
     }
 
-    public boolean getGameIsOver()
-    {
+    public boolean getGameIsOver() {
         return this.gameIsOver;
     }
 
-    public MusicHandler getMusicHandler()
-    {
+    public MusicHandler getMusicHandler() {
         return this.musicHandler;
     }
 
-    public void setIsBonusActive()
-    {
-        this.display.setIsBonusActive(true);
+    public void setBonus(int bonus) {
+        this.bonus = bonus;
+    }
+
+    public int getBonus() {
+        return this.bonus;
     }
 }

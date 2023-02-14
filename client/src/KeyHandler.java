@@ -30,6 +30,7 @@ public class KeyHandler implements KeyListener
         {
             Map<String, String> position = new HashMap<String, String>();
             position.put("currentPosition", this.map.getStartX() + "," + this.map.getStartY());
+            position.put("bonus", this.client.getBonus() + "");
 
             if(this.key == "")
             {

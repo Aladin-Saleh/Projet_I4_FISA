@@ -8,9 +8,9 @@ import com.fasterxml.jackson.databind.node.BooleanNode;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import  java.awt.event.*;
+import java.awt.event.*;
 
-public class Display extends JComponent{
+public class Display extends JComponent {
 
     private Maze map;
     private Client client;
@@ -40,8 +40,7 @@ public class Display extends JComponent{
     private ImageIcon up;
     private ImageIcon up_hover;
 
-    public Display(Maze map, Client client)
-    {
+    public Display(Maze map, Client client) {
         this.map = map;
         this.client = client;
         this.map.setGUI(this);
@@ -92,16 +91,13 @@ public class Display extends JComponent{
     }
 
     @Override
-    protected void paintComponent(Graphics p) 
-    {
-        
+    protected void paintComponent(Graphics p) {
+
         p.setColor(Color.BLACK);
         p.fillRect(0, 0, 960, 960);
-        
-        if (!this.client.getGameIsOver())
-        {
-            if (this.map.getMap() == null && this.map.getStartX() == -1 && this.map.getStartY() == -1)
-            {
+
+        if (!this.client.getGameIsOver()) {
+            if (this.map.getMap() == null && this.map.getStartX() == -1 && this.map.getStartY() == -1) {
                 p.setColor(Color.BLACK);
                 p.fillRect(0, 0, 960, 960);
                 p.setColor(Color.WHITE);
@@ -133,6 +129,8 @@ public class Display extends JComponent{
                     this.direction = 4;
                     
 
+                    
+
                     // draw map
                     for (int i = 0; i < this.map.getMap().length; i++)
                     {
@@ -144,29 +142,31 @@ public class Display extends JComponent{
                                 p.drawImage(player,j*32, i*32, null);
                                 this.idleFrameX = (this.idleFrameX+1)%4;
                             }
-        
-                            if (this.map.getMap()[i][j].getEastWall())
+
+                            if (this.map.getMap()[i][j].getIsTransporter()) 
                             {
                                 p.setColor(Color.WHITE);
-                                p.drawLine((j+1)*32, i*32, (j+1)*32, (i+1)*32);
+                                p.drawOval(j * 32, i * 32, 32, 32);
                             }
-        
-                            if (this.map.getMap()[i][j].getWestWall())
-                            {
+
+                            if (this.map.getMap()[i][j].getEastWall()) {
                                 p.setColor(Color.WHITE);
-                                p.drawLine(j*32, i*32, j*32, (i+1)*32);
+                                p.drawLine((j + 1) * 32, i * 32, (j + 1) * 32, (i + 1) * 32);
                             }
-        
-                            if (this.map.getMap()[i][j].getNorthWall())
-                            {
+
+                            if (this.map.getMap()[i][j].getWestWall()) {
                                 p.setColor(Color.WHITE);
-                                p.drawLine(j*32, i*32, (j+1)*32, i*32);
+                                p.drawLine(j * 32, i * 32, j * 32, (i + 1) * 32);
                             }
-        
-                            if (this.map.getMap()[i][j].getSouthWall())
-                            {
+
+                            if (this.map.getMap()[i][j].getNorthWall()) {
                                 p.setColor(Color.WHITE);
-                                p.drawLine(j*32, (i+1)*32, (j+1)*32, (i+1)*32);
+                                p.drawLine(j * 32, i * 32, (j + 1) * 32, i * 32);
+                            }
+
+                            if (this.map.getMap()[i][j].getSouthWall()) {
+                                p.setColor(Color.WHITE);
+                                p.drawLine(j * 32, (i + 1) * 32, (j + 1) * 32, (i + 1) * 32);
                             }
 
                             if(this.map.getMap()[i][j].getIsTransporter())
@@ -175,16 +175,12 @@ public class Display extends JComponent{
                             }
                         }
                     }
-                }
-                catch(Exception e)
-                {
+                } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
             }
-        }
-        else
-        {
-            String message = this.client.getAsWin() ? "You win!" : "You lose!";
+        } else {
+            String message = this.client.getisWin() ? "You win!" : "You lose!";
             p.setColor(Color.BLACK);
             p.fillRect(0, 0, 960, 960);
             p.setColor(Color.WHITE);
@@ -192,8 +188,7 @@ public class Display extends JComponent{
         }
     }
 
-    public void setDirection(int direction)
-    {
+    public void setDirection(int direction) {
         this.direction = direction;
     }
 
