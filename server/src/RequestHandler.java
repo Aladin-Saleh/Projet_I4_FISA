@@ -71,7 +71,15 @@ public class RequestHandler
 
     public void handleRequest(String message) 
     {
-        
+        if (jsonHandler.readJSON(message).get("close") != null)
+        {
+            int x = Integer.parseInt(jsonHandler.readJSON(message).get("close").toString().split(",")[0], 10);
+            int y = Integer.parseInt(jsonHandler.readJSON(message).get("close").toString().split(",")[1], 10);
+
+            System.out.println(jsonHandler.readJSON(message).get("close"));
+            this.maze.getMap()[x][y].setOccupied(false);
+        }
+
         if (jsonHandler.readJSON(message).get("position") != null)
         {
             Map<String, String> response = new HashMap<String, String>();

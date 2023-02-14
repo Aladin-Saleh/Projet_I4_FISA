@@ -107,7 +107,7 @@ public class ClientHandler implements Runnable {
 
     public void clientLeft()
     {
-        this.broadcast("[ClientHandler] : Client left !");
+        // this.broadcast("[ClientHandler] : Client left !");
         clients.remove(this);
     }
 
