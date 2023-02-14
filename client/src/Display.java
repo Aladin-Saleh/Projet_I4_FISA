@@ -49,9 +49,9 @@ public class Display extends JComponent{
             this.sound_spritesheet                  = ImageIO.read(new File("res/sound_spritesheet.png"));
             this.tp                                 = ImageIO.read(new File("res/pentacle.png"));
             this.mute                               = new ImageIcon(sound_spritesheet.getSubimage(0,0,37, 35));
-            this.mute_hover                         = new ImageIcon(sound_spritesheet.getSubimage(111,35,37, 35));
+            this.mute_hover                         = new ImageIcon(sound_spritesheet.getSubimage(0,35,37, 35));
             this.on                                 = new ImageIcon(sound_spritesheet.getSubimage(111,0,37, 35));
-            this.on_hover                           = new ImageIcon(sound_spritesheet.getSubimage(0,35,37, 35));
+            this.on_hover                           = new ImageIcon(sound_spritesheet.getSubimage(111,35,37, 35));
             this.down                               = new ImageIcon(this.sound_spritesheet.getSubimage(37, 0, 37, 35));
             this.down_hover                         = new ImageIcon(sound_spritesheet.getSubimage(37,35,37, 35));
             this.up                                 = new ImageIcon(this.sound_spritesheet.getSubimage(74, 0, 37, 35));
@@ -206,12 +206,12 @@ public class Display extends JComponent{
                 if(muted)
                 {
                     client.getMusicHandler().mute();
-                    button_volume_mute.setIcon(on);
+                    button_volume_mute.setIcon(mute);
                 }
                 else
                 {
                     client.getMusicHandler().unmute();
-                    button_volume_mute.setIcon(mute);
+                    button_volume_mute.setIcon(on);
                 }
             }
 

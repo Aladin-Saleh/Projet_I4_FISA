@@ -97,7 +97,6 @@ public class RequestHandler
                         this.client.setAsWin(isExit);
                         this.client.setGameIsOver(true);
                     }
-
                 }
 
                 if (this.map.getGUI() != null)
