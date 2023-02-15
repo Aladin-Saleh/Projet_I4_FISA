@@ -18,7 +18,7 @@ public class Server
     public Server(ServerSocket ss)
     {
         this.serverSocket   = ss;
-        this.maxClient      = 4;
+        this.maxClient      = 10;
         this.gameZone       = new GameZone(29);
         this.screen         = new Screen(this.gameZone,29);
     }
@@ -28,7 +28,7 @@ public class Server
         this.maze           = maze;
         this.serverSocket   = ss;
         this.display        = new Display(this.maze);
-        this.maxClient      = 4;
+        this.maxClient      = 10;
         this.gameZone       = new GameZone(29);
         this.screen         = new Screen(29, this.display);
     }
