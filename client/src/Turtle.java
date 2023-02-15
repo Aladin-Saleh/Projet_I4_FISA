@@ -1,9 +1,9 @@
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.InetAddress;
-import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 public class Turtle 
 {    
     // Constante de direction
@@ -20,7 +20,7 @@ public class Turtle
     private Socket  socket;
     private Screen  screen;
     private KeyHandler keyHandler;
-
+    private File config;
 
     public Turtle(int port)
     {
@@ -28,7 +28,20 @@ public class Turtle
         {
 
             this.map = new Maze();
-            this.socket = new Socket("10.200.0.163",port);
+            this.config = new File("config.txt");
+            Scanner myReader = new Scanner(this.config);
+            String server_address = "localhost";
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                System.out.println(data);
+                if(data.contains("Server-address :"))
+                {
+                    server_address = data.split(":")[1].trim();
+                }
+            }
+            myReader.close();
+            System.out.println(server_address);
+            this.socket = new Socket(server_address,port);
             Client client   = new Client(this.socket, this.map);
             // this.keyHandler = new KeyHandler(this.map, client);
             this.screen = new Screen(this.map, client);
