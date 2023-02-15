@@ -1,5 +1,8 @@
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.sound.sampled.LineUnavailableException;
 
 public class RequestHandler {
 
@@ -79,7 +82,15 @@ public class RequestHandler {
                     {
                         this.client.setBonus(this.client.getBonus() + 1);
                         // TODO : Ajouter le display du bonus dans l'interface
-                        this.client.setIsBonusActive(isBonus);
+                        try 
+                        {
+                            this.client.getMusicHandler().playBonusSfx();
+                        } 
+                        catch (Exception e) 
+                        {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
                     }
                 }
 
@@ -91,7 +102,6 @@ public class RequestHandler {
                     if (isBonusUsed)
                     {
                         this.client.setBonus(this.client.getBonus() - 1);
-                        this.client.setIsBonusActive(false);
                         //TODO : Désactiver le mur de la case de départ
                         int xDirection = startX - this.map.getStartX();
                         int yDirection = startY - this.map.getStartY();
@@ -111,6 +121,16 @@ public class RequestHandler {
                         {
                             this.map.getMap()[startX][startY].setWestWall(false);
                         }
+
+                        try 
+                        {
+                            this.client.getMusicHandler().playWallBreakingSfx();
+                        } 
+                        catch (Exception e) 
+                        {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
                     }
 
                 }
@@ -121,6 +141,15 @@ public class RequestHandler {
                     int yTeleport = Integer.parseInt(jsonHandler.readJSON(message).get("teleportPosition").toString().split(",")[1], 10);
 
                     this.map.getMap()[xTeleport][yTeleport].setIsTransporter(true);
+                    try 
+                    {
+                        this.client.getMusicHandler().playTeleporterSfx();
+                    }
+                    catch (Exception e) 
+                    {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }
 
                 this.map.updateMaze();

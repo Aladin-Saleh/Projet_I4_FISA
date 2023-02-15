@@ -109,11 +109,11 @@ public class Display extends JComponent {
                 {
                     p.drawImage(this.volume,800,820,null);
 
-                    if(this.client.getIsBonusActive())
+                    if(this.client.getBonus()>0)
                     {
                         p.drawImage(bonus_pickaxe,428,820,null);
                         p.setColor(Color.white);
-                        p.drawString("Pioche : vous permet de casser un mur", 345, 910);
+                        p.drawString("("+this.client.getBonus()+")Pioche : vous permet de casser un mur", 345, 910);
                     }
                     else
                     {

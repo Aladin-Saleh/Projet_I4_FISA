@@ -17,7 +17,6 @@ public class Client {
     private boolean gameIsOver;
     private MusicHandler musicHandler;
     private int bonus;
-    private boolean isBonusActive;
 
     public Client(Socket socket, Maze map) {
         try 
@@ -25,15 +24,14 @@ public class Client {
             this.isWin = false;
             this.gameIsOver = false;
             this.map = map;
-            this.requestHandler = new RequestHandler(this.map, this);
             this.jsonHandler = new JSONHandler();
             this.socket = socket;
             this.bReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.bWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.readInput = new BufferedReader(new InputStreamReader(System.in));
-            this.musicHandler = new MusicHandler("res/music.wav");
-            this.bonus = 0;
-            this.isBonusActive = false;
+            this.bonus = 5;
+            this.musicHandler = new MusicHandler();
+            this.requestHandler = new RequestHandler(this.map, this);
         } 
         catch (Exception e)
         {
@@ -144,13 +142,5 @@ public class Client {
 
     public int getBonus() {
         return this.bonus;
-    }
-
-    public void setIsBonusActive(boolean isBonusActive){
-        this.isBonusActive = isBonusActive;
-    }
-
-    public boolean getIsBonusActive(){
-        return this.isBonusActive;
     }
 }
