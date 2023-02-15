@@ -1,4 +1,4 @@
-import java.io.File; 
+import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -6,19 +6,20 @@ import javax.sound.sampled.FloatControl;
 
 public class MusicHandler {
 
-    private Clip clip;
+    private Clip backgroundClip,bonusClip,tpClip,wallBreakingClip;
     private float volume;
+    private AudioInputStream inputStream;
 
-    public MusicHandler(String soundPath)
+    public MusicHandler()
     {
         try
         {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(soundPath).getAbsoluteFile());
-            this.clip = AudioSystem.getClip();
-            this.clip.open(audioInputStream);
+            this.inputStream = AudioSystem.getAudioInputStream(new File("res/music.wav").getAbsoluteFile());
+            this.backgroundClip = AudioSystem.getClip();
+            this.backgroundClip.open(this.inputStream);
             this.setVolume(0.1f);
-            this.clip.loop(this.clip.LOOP_CONTINUOUSLY);
-            this.clip.start(); //start to play the clip
+            this.backgroundClip.loop(this.backgroundClip.LOOP_CONTINUOUSLY);
+            this.backgroundClip.start(); //start to play the clip
             this.volume = this.getVolume();  
             System.out.println(this.getVolume());
         } 
@@ -30,28 +31,28 @@ public class MusicHandler {
 
     public void stop()
     {
-        this.clip.stop();
+        this.backgroundClip.stop();
     }
 
     public void start()
     {
-        this.clip.start();
+        this.backgroundClip.start();
     }
 
     public void mute()
     {
-        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);        
+        FloatControl gainControl = (FloatControl) this.backgroundClip.getControl(FloatControl.Type.MASTER_GAIN);        
         gainControl.setValue(20f * (float) Math.log10(0f));
     }
 
     public void unmute()
     {
-        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);        
+        FloatControl gainControl = (FloatControl) this.backgroundClip.getControl(FloatControl.Type.MASTER_GAIN);        
         gainControl.setValue(20f * (float) Math.log10(this.volume));
     }
 
     public float getVolume() {
-        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);        
+        FloatControl gainControl = (FloatControl) this.backgroundClip.getControl(FloatControl.Type.MASTER_GAIN);        
         return (float) Math.pow(10f, gainControl.getValue() / 20f);
     }
     
@@ -60,8 +61,53 @@ public class MusicHandler {
         {
             throw new IllegalArgumentException("Volume invalide: " + volume);
         }
-        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);        
+        FloatControl gainControl = (FloatControl) this.backgroundClip.getControl(FloatControl.Type.MASTER_GAIN);        
         gainControl.setValue(20f * (float) Math.log10(volume));
         this.volume = volume;
+    }
+
+    public void playBonusSfx()
+    {
+        try
+        {
+            this.inputStream = AudioSystem.getAudioInputStream(new File("res/bonus.wav").getAbsoluteFile());
+            this.bonusClip = AudioSystem.getClip();
+            this.bonusClip.open(this.inputStream);
+            this.bonusClip.start(); //start to play the clip
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void playTeleporterSfx()
+    {
+        try
+        {
+            this.inputStream = AudioSystem.getAudioInputStream(new File("res/teleporter.wav").getAbsoluteFile());
+            this.tpClip = AudioSystem.getClip();
+            this.tpClip.open(this.inputStream);
+            this.tpClip.start(); //start to play the clip
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void playWallBreakingSfx()
+    {
+        try
+        {
+            this.inputStream = AudioSystem.getAudioInputStream(new File("res/rock-smash.wav").getAbsoluteFile());
+            this.wallBreakingClip = AudioSystem.getClip();
+            this.wallBreakingClip.open(this.inputStream);
+            this.wallBreakingClip.start(); //start to play the clip
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 }
