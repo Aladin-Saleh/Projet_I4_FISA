@@ -29,7 +29,7 @@ public class Client {
             this.bReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.bWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.readInput = new BufferedReader(new InputStreamReader(System.in));
-            this.bonus = 5;
+            this.bonus = 0;
             this.musicHandler = new MusicHandler();
             this.requestHandler = new RequestHandler(this.map, this);
         } 
