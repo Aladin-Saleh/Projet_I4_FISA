@@ -28,7 +28,7 @@ public class Turtle
         {
 
             this.map = new Maze();
-            this.socket = new Socket(InetAddress.getLocalHost(),port);
+            this.socket = new Socket("10.200.0.163",port);
             Client client   = new Client(this.socket, this.map);
             // this.keyHandler = new KeyHandler(this.map, client);
             this.screen = new Screen(this.map, client);
