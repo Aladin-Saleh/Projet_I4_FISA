@@ -34,11 +34,13 @@ public class ClientHandler implements Runnable {
             this.writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             clients.add(this);
+            Server.successLogs.write("[ClientHandler] : Client connected !");
 
         }
         catch (Exception e)
         {
             System.out.println("[ClientHandler] : " + e.getMessage());
+            Server.errorLogs.write("[ClientHandler] : " + e.getMessage());
         }
     }
 
@@ -59,6 +61,7 @@ public class ClientHandler implements Runnable {
         catch (Exception e)
         {
             System.out.println("[ClientHandler] : " + e.getMessage());
+            Server.errorLogs.write("[ClientHandler] : " + e.getMessage());
         }
     }
 
@@ -80,6 +83,7 @@ public class ClientHandler implements Runnable {
         catch (Exception e)
         {
             System.out.println("[ClientHandler] : " + e.getMessage());
+            Server.errorLogs.write("[ClientHandler] : " + e.getMessage());  
             this.close(this.socket, this.reader, this.writer);
         }
     }
@@ -101,6 +105,7 @@ public class ClientHandler implements Runnable {
         catch (Exception e)
         {
             System.out.println("[ClientHandler] : " + e.getMessage());
+            Server.errorLogs.write("[ClientHandler] : " + e.getMessage());
             this.close(this.socket, this.reader, this.writer);
         }
     }
@@ -108,6 +113,7 @@ public class ClientHandler implements Runnable {
     public void clientLeft()
     {
         // this.broadcast("[ClientHandler] : Client left !");
+        Server.successLogs.write("[ClientHandler] : Client left !");
         clients.remove(this);
     }
 
@@ -135,6 +141,7 @@ public class ClientHandler implements Runnable {
         catch (IOException e)
         {
             System.out.println("[ClientHandler] : " + e.getMessage());
+            Server.errorLogs.write("[ClientHandler] : " + e.getMessage());
         }
     }
 
@@ -165,6 +172,7 @@ public class ClientHandler implements Runnable {
                 if (s != null)
                 {
                     System.out.println("[ClientHandler] : " + s);
+                    Server.successLogs.write("[ClientHandler] : " + s);
                     this.requestHandler.handleRequest(s);
 
                     // this.broadcast(s);
@@ -180,11 +188,13 @@ public class ClientHandler implements Runnable {
             catch (IOException e)
             {
                 System.out.println("[ClientHandler] : " + e.getMessage());
+                Server.errorLogs.write("[ClientHandler] : " + e.getMessage());
                 this.close(this.socket, this.reader, this.writer);
             }
         }
         
         System.out.println("[ClientHandler] : Client left !");
+        Server.successLogs.write("[ClientHandler] : Client left !");
         close(this.socket, this.reader, this.writer);
 
         

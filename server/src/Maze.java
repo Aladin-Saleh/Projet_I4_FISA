@@ -21,6 +21,7 @@ public class Maze
 
         this.initialiseMap();
         this.generateViaDepthFirst();
+        Server.successLogs.write("[Maze] : Maze generated !");
     }
 
 

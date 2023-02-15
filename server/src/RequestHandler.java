@@ -169,6 +169,7 @@ public class RequestHandler
 
 
             this.clientHandler.sendMessage(this.jsonHandler.writeJSON(response));
+            Server.successLogs.write("Position updated");
 
         }
         
@@ -179,6 +180,7 @@ public class RequestHandler
 
             response.put("end", "true");
             this.clientHandler.broadcast(this.jsonHandler.writeJSON(response));
+            Server.successLogs.write("Game finished");
         }
 
         

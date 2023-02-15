@@ -20,12 +20,13 @@ public class JSONHandler {
         {
             Object obj              = mapper.readValue(json, Object.class);
             Map<String, Object> map = (Map<String, Object>) obj;
-
+            Server.successLogs.write("[JSONHandler] : JSON read successfully !");
             System.out.println("Lecture de la grappe de données au format JSON effectuée avec succès.");
             return map;
         } 
         catch (Exception e) 
         {
+            Server.errorLogs.write("[JSONHandler] : Error while reading JSON. " + e.getMessage());
             System.err.println("Erreur lors de la lecture de la grappe de données au format JSON. " + e.getMessage());
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -40,12 +41,14 @@ public class JSONHandler {
         {
             String json = mapper.writeValueAsString(map);
             System.out.println("Ecriture de la grappe de données au format JSON effectuée avec succès.");
+            Server.successLogs.write("[JSONHandler] : JSON written successfully !");
             return json;
         } 
         catch (Exception e) 
         {
             System.err.println("Erreur lors de l'écriture de la grappe de données au format JSON. " + e.getMessage());
             System.out.println(e.getMessage());
+            Server.errorLogs.write("[JSONHandler] : Error while writing JSON. " + e.getMessage());
             e.printStackTrace();
         }
         return null;
